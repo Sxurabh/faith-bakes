@@ -5,6 +5,8 @@ interface FloatingElementProps {
   className?: string;
   delay?: 'none' | 'small' | 'medium' | 'large';
   size?: 'sm' | 'md' | 'lg';
+  parallaxSpeed?: number;
+  parallaxOffset?: number;
 }
 
 const delayClasses = {
@@ -25,6 +27,7 @@ export default function FloatingElement({
   className = '',
   delay = 'small',
   size = 'md',
+  parallaxOffset = 0,
 }: FloatingElementProps) {
   return (
     <div
@@ -34,7 +37,10 @@ export default function FloatingElement({
         sizeClasses[size],
         className
       )}
-      style={{ animationDelay: delay === 'medium' ? '2s' : delay === 'large' ? '1s' : '0s' }}
+      style={{ 
+        animationDelay: delay === 'medium' ? '2s' : delay === 'large' ? '1s' : '0s',
+        transform: `translateY(${parallaxOffset}px)`,
+      }}
     >
       {children}
     </div>

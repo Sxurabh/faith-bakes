@@ -5,12 +5,16 @@ import { gsap } from '@/app/lib/gsap';
 import ScrollReveal from '@/app/components/ScrollReveal';
 import FloatingElement from '@/app/components/FloatingElement';
 import BlobShape from '@/app/components/BlobShape';
+import { useParallax } from '@/app/hooks/useParallax';
 
 export default function Hero() {
   const logoRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLButtonElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
+  const parallax1 = useParallax(1);
+  const parallax2 = useParallax(0.7);
+  const parallax3 = useParallax(1.3);
 
   useEffect(() => {
     const letters = logoRef.current?.querySelectorAll('.logo-letter');
@@ -73,20 +77,20 @@ export default function Hero() {
         className="absolute top-1/3 right-10 w-48 h-48 opacity-10"
       />
 
-      <FloatingElement delay="small" size="lg" className="absolute top-20 left-[10%]">
+      <FloatingElement delay="small" size="lg" className="absolute top-20 left-[10%]" parallaxOffset={parallax1}>
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <circle cx="50" cy="50" r="40" fill="#FFB6C1" />
           <circle cx="50" cy="45" r="30" fill="#FFF8E7" />
         </svg>
       </FloatingElement>
 
-      <FloatingElement delay="medium" size="md" className="absolute top-40 right-[15%]">
+      <FloatingElement delay="medium" size="md" className="absolute top-40 right-[15%]" parallaxOffset={parallax2}>
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <rect x="20" y="30" width="60" height="50" rx="8" fill="#98D8C8" />
         </svg>
       </FloatingElement>
 
-      <FloatingElement delay="large" size="md" className="absolute bottom-32 left-[20%]">
+      <FloatingElement delay="large" size="md" className="absolute bottom-32 left-[20%]" parallaxOffset={parallax3}>
         <svg viewBox="0 0 100 100" className="w-full h-full">
           <polygon points="50,10 90,90 10,90" fill="#FFD700" />
         </svg>
@@ -128,7 +132,7 @@ export default function Hero() {
         <div className="flex flex-col items-center gap-2 text-chocolate/50">
           <span className="text-sm font-nunito">Scroll</span>
           <svg
-            className="w-6 h-6 animate-bounce"
+            className="w-6 h-6 animate-pulse"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

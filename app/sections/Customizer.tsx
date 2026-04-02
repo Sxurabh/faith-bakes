@@ -66,7 +66,7 @@ export default function Customizer() {
     };
     
     requestAnimationFrame(animate);
-  }, [selections]);
+  }, [getPrice]);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -152,8 +152,50 @@ export default function Customizer() {
 
         {/* Options */}
         <div className="bg-cream rounded-3xl p-6 shadow-lg">
-          <div className="grid grid-cols-2 gap-4">
-            {currentOptions.map((option) => {
+          {currentStep === 4 ? (
+            <div className="space-y-4">
+              <h3 className="font-playfair text-xl text-chocolate mb-4">Your Custom Creation</h3>
+              
+              {selections.base && (
+                <div className="flex justify-between py-2 border-b border-chocolate/10">
+                  <span className="text-chocolate/70">Base</span>
+                  <span className="font-semibold text-chocolate">{selections.base}</span>
+                </div>
+              )}
+              {selections.flavor && (
+                <div className="flex justify-between py-2 border-b border-chocolate/10">
+                  <span className="text-chocolate/70">Flavor</span>
+                  <span className="font-semibold text-chocolate">{selections.flavor}</span>
+                </div>
+              )}
+              {selections.frosting && (
+                <div className="flex justify-between py-2 border-b border-chocolate/10">
+                  <span className="text-chocolate/70">Frosting</span>
+                  <span className="font-semibold text-chocolate">{selections.frosting}</span>
+                </div>
+              )}
+              {(selections.toppings as string[]).length > 0 && (
+                <div className="flex justify-between py-2 border-b border-chocolate/10">
+                  <span className="text-chocolate/70">Toppings</span>
+                  <span className="font-semibold text-chocolate">{(selections.toppings as string[]).join(', ')}</span>
+                </div>
+              )}
+              
+              <div className="flex justify-between py-2 mt-4">
+                <span className="font-playfair text-lg text-chocolate">Total</span>
+                <span className="font-bold text-mint text-xl">${(getPrice() / 100).toFixed(2)}</span>
+              </div>
+              
+              <button 
+                onClick={() => window.location.href = '#contact'}
+                className="w-full mt-4 px-6 py-3 bg-soft-pink text-chocolate rounded-full font-semibold hover:bg-gold transition-colors"
+              >
+                Contact to Order
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-4">
+              {currentOptions.map((option) => {
               const optionName = typeof option === 'string' ? option : option.name;
               const optionPrice = typeof option === 'object' ? option.price : 0;
               
@@ -177,7 +219,8 @@ export default function Customizer() {
                 </button>
               );
             })}
-          </div>
+            </div>
+          )}
 
           {/* Navigation */}
           <div className="flex justify-between mt-6">

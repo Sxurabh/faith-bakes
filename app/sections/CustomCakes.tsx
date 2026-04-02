@@ -71,16 +71,20 @@ export default function CustomCakes() {
       </p>
       <div
         ref={cardsRef}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
+        className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8 max-w-6xl mx-auto"
       >
-        {products.cakes.map((cake) => (
-          <AnimatedCard
+        {products.cakes.map((cake, index) => (
+          <div
             key={cake.id}
-            image={cake.image}
-            name={cake.name}
-            description={cake.description}
-            price={cake.basePrice}
-          />
+            className={`break-inside-avoid ${index === 0 ? 'lg:col-span-2' : ''}`}
+          >
+            <AnimatedCard
+              image={cake.image}
+              name={cake.name}
+              description={cake.description}
+              price={cake.basePrice}
+            />
+          </div>
         ))}
       </div>
       <div className="text-center mt-12">

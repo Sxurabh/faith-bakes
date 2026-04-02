@@ -5,7 +5,13 @@ import Image from 'next/image';
 import { X } from 'lucide-react';
 
 interface ProductModalProps {
-  product: { name: string; description: string; image: string; price: number } | null;
+  product: { 
+    name: string; 
+    description: string; 
+    image: string; 
+    price?: number;
+    basePrice?: number;
+  } | null;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -99,7 +105,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
         <h2 id="modal-title" className="font-playfair text-2xl font-bold text-chocolate mb-2">{product.name}</h2>
         <p className="text-chocolate/70 mb-4">{product.description}</p>
         <div className="flex items-center justify-between">
-          <span className="font-nunito text-xl font-bold text-mint">${(product.price / 100).toFixed(2)}</span>
+          <span className="font-nunito text-xl font-bold text-mint">${((product.price ?? product.basePrice ?? 0) / 100).toFixed(2)}</span>
           <button className="px-6 py-2 bg-soft-pink text-chocolate rounded-full font-semibold hover:bg-gold transition-colors">
             Order Now
           </button>

@@ -6,12 +6,6 @@ interface BlobShapeProps {
   opacity?: number;
 }
 
-const colorClasses = {
-  pink: 'bg-soft-pink',
-  mint: 'bg-mint',
-  gold: 'bg-gold',
-};
-
 export default function BlobShape({
   color = 'pink',
   className = '',

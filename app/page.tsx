@@ -1,6 +1,7 @@
 import Hero from './sections/Hero';
 import Cupcakes from './sections/Cupcakes';
 import CustomCakes from './sections/CustomCakes';
+import CookiesBrownies from './sections/CookiesBrownies';
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <Cupcakes />
       <CustomCakes />
+      <CookiesBrownies />
     </main>
   );
 }

@@ -13,7 +13,7 @@ interface AnimatedCardProps {
 
 export default function AnimatedCard({ image, name, description, price, onQuickView }: AnimatedCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
+  const [transform, setTransform] = useState('');
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current) return;
@@ -24,13 +24,11 @@ export default function AnimatedCard({ image, name, description, price, onQuickV
     const centerY = rect.height / 2;
     const rotateX = (y - centerY) / 10;
     const rotateY = (centerX - x) / 10;
-    cardRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`);
   };
 
   const handleMouseLeave = () => {
-    if (!cardRef.current) return;
-    cardRef.current.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-    setIsHovered(false);
+    setTransform('perspective(1000px) rotateX(0) rotateY(0) scale(1)');
   };
 
   return (
@@ -39,13 +37,14 @@ export default function AnimatedCard({ image, name, description, price, onQuickV
       className="group relative bg-cream rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 ease-out cursor-pointer"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onMouseEnter={() => setIsHovered(true)}
+      style={{ transform }}
     >
       <div className="relative h-48 overflow-hidden">
         <Image
           src={image}
           alt={name}
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-300 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-chocolate/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />

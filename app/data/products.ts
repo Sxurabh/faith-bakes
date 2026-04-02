@@ -5,9 +5,9 @@ export const products = {
     { id: 'cupcake-3', name: 'Strawberry Bliss', description: 'Fresh strawberry with cream cheese frosting', basePrice: 500, image: '/images/placeholder.svg', flavors: ['Strawberry', 'Raspberry'], isCustomizable: true },
   ],
   cakes: [
-    { id: 'cake-1', name: 'Classic Birthday', description: '3-layer vanilla cake with your choice of decorations', basePrice: 5500, sizes: [{name: '6"', price: 4500, servings: 12}, {name: '8"', price: 5500, servings: 20}, {name: '10"', price: 6500, servings: 30}], isCustomizable: true },
-    { id: 'cake-2', name: 'Wedding Elegance', description: 'Elegant white fondant with floral accents', basePrice: 15000, isCustomizable: true },
-    { id: 'cake-3', name: 'Anniversary Special', description: 'Two-tone design with gold accents', basePrice: 12000, isCustomizable: true },
+    { id: 'cake-1', name: 'Classic Birthday', description: '3-layer vanilla cake with your choice of decorations', basePrice: 5500, image: '/images/placeholder.svg', sizes: [{name: '6"', price: 4500, servings: 12}, {name: '8"', price: 5500, servings: 20}, {name: '10"', price: 6500, servings: 30}], isCustomizable: true },
+    { id: 'cake-2', name: 'Wedding Elegance', description: 'Elegant white fondant with floral accents', basePrice: 15000, image: '/images/placeholder.svg', isCustomizable: true },
+    { id: 'cake-3', name: 'Anniversary Special', description: 'Two-tone design with gold accents', basePrice: 12000, image: '/images/placeholder.svg', isCustomizable: true },
   ],
   cookies: [
     { id: 'cookie-1', name: 'Chocolate Chip', description: 'Classic chocolate chip with sea salt', basePrice: 350, image: '/images/placeholder.svg', isCustomizable: false },

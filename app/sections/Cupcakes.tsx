@@ -36,10 +36,11 @@ export default function Cupcakes() {
       if (cardsContainerRef.current) {
         gsap.fromTo(
           cardsContainerRef.current.children,
-          { y: 50, opacity: 0 },
+          { y: 50, opacity: 0, scale: 0.9 },
           {
             y: 0,
             opacity: 1,
+            scale: 1,
             duration: 0.6,
             stagger: 0.1,
             ease: 'power2.out',
@@ -65,17 +66,18 @@ export default function Cupcakes() {
       </h2>
       <div 
         ref={cardsContainerRef}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
+        className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-8 overflow-x-auto snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0"
       >
-        {products.cupcakes.map((cupcake) => (
-          <AnimatedCard
-            key={cupcake.id}
-            image={cupcake.image}
-            name={cupcake.name}
-            description={cupcake.description}
-            price={cupcake.basePrice}
-            onQuickView={() => setSelectedProduct(cupcake)}
-          />
+        {products.cupcakes.map((cupcake, index) => (
+          <div key={cupcake.id} className="flex-shrink-0 w-[280px] sm:w-auto snap-center">
+            <AnimatedCard
+              image={cupcake.image}
+              name={cupcake.name}
+              description={cupcake.description}
+              price={cupcake.basePrice}
+              onQuickView={() => setSelectedProduct(cupcake)}
+            />
+          </div>
         ))}
       </div>
       <ProductModal

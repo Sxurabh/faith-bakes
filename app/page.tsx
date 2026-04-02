@@ -3,6 +3,7 @@ import Cupcakes from './sections/Cupcakes';
 import CustomCakes from './sections/CustomCakes';
 import CookiesBrownies from './sections/CookiesBrownies';
 import Customizer from './sections/Customizer';
+import Contact from './sections/Contact';
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <CustomCakes />
       <CookiesBrownies />
       <Customizer />
+      <Contact />
     </main>
   );
 }

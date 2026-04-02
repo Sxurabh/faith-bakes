@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect, ReactNode } from 'react';
-import { gsap, ScrollTrigger } from '@/app/lib/gsap';
+import { gsap } from '@/app/lib/gsap';
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -23,30 +23,26 @@ export default function ScrollReveal({
   useEffect(() => {
     if (!ref.current) return;
     
-    const el = ref.current;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ref.current,
+        { y, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration,
+          delay,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: ref.current,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    }, ref);
     
-    gsap.fromTo(
-      el,
-      { y, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration,
-        delay,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
-        },
-      }
-    );
-
-    return () => {
-      ScrollTrigger.getAll().forEach(st => {
-        if (st.vars.trigger === el) st.kill();
-      });
-    };
+    return () => ctx.revert();
   }, [y, delay, duration]);
 
   return (

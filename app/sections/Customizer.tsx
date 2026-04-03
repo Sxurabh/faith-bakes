@@ -3,9 +3,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/app/lib/gsap';
 import { cn } from '@/app/lib/utils';
-import { ChevronRight, ChevronLeft, ShoppingCart } from 'lucide-react';
+import { ChevronRight, ChevronLeft, ShoppingCart, Cake, IceCream, Cookie, Sparkles } from 'lucide-react';
 
-const STEPS = ['Base', 'Flavor', 'Frosting', 'Toppings', 'Preview'];
+const STEPS = [
+  { name: 'Base', icon: Cake },
+  { name: 'Flavor', icon: IceCream },
+  { name: 'Frosting', icon: Sparkles },
+  { name: 'Toppings', icon: Cookie },
+  { name: 'Preview', icon: Cake },
+];
 
 const OPTIONS = {
   base: [
@@ -94,7 +100,7 @@ export default function Customizer() {
   }, []);
 
   const handleSelect = (value: string) => {
-    const key = STEPS[currentStep].toLowerCase();
+    const key = STEPS[currentStep].name.toLowerCase();
     if (key === 'toppings') {
       const current = selections.toppings as string[];
       if (current.includes(value)) {
@@ -113,7 +119,7 @@ export default function Customizer() {
   const handleNext = () => setCurrentStep(c => Math.min(c + 1, STEPS.length - 1));
   const handlePrev = () => setCurrentStep(c => Math.max(c - 1, 0));
 
-  const currentKey = STEPS[currentStep].toLowerCase();
+  const currentKey = STEPS[currentStep].name.toLowerCase();
   const currentOptions = OPTIONS[currentKey as keyof typeof OPTIONS] || [];
   const isSelected = (value: string) => {
     const sel = selections[currentKey];
@@ -122,79 +128,81 @@ export default function Customizer() {
   };
 
   return (
-    <section ref={sectionRef} id="customizer" className="py-20 px-6 bg-mint/20">
+    <section ref={sectionRef} id="customizer" className="py-20 px-6 bg-soft-sage/30">
       <h2
         ref={headingRef}
-        className="font-playfair text-4xl md:text-5xl text-center text-chocolate mb-12"
+        className="font-playfair text-4xl md:text-5xl text-center text-deep-chocolate mb-12"
       >
         Design Your Treat
       </h2>
 
       <div className="max-w-2xl mx-auto">
-        {/* Progress Steps */}
-        <div className="flex justify-center gap-2 mb-8 flex-wrap">
-          {STEPS.map((step, index) => (
-            <div
-              key={step}
-              className={cn(
-                'px-3 py-1 rounded-full font-nunito text-sm transition-all',
-                index === currentStep
-                  ? 'bg-soft-pink text-chocolate scale-110'
-                  : index < currentStep
-                  ? 'bg-mint text-chocolate'
-                  : 'bg-cream text-chocolate/50'
-              )}
-            >
-              {step}
-            </div>
-          ))}
+        <div className="flex justify-center gap-2 md:gap-4 mb-8 flex-wrap">
+          {STEPS.map((step, index) => {
+            const Icon = step.icon;
+            return (
+              <div
+                key={step.name}
+                className={cn(
+                  'flex items-center gap-2 px-3 py-2 rounded-full font-nunito text-sm transition-all',
+                  index === currentStep
+                    ? 'bg-raspberry text-white scale-110'
+                    : index < currentStep
+                    ? 'bg-honey-gold text-deep-chocolate'
+                    : 'bg-soft-cream text-deep-chocolate/50'
+                )}
+              >
+                <Icon className="w-4 h-4" />
+                <span className="hidden md:inline">{step.name}</span>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Options */}
-        <div className="bg-cream rounded-3xl p-6 shadow-lg">
+        <div className="bg-soft-cream rounded-3xl p-6 shadow-lg">
           {currentStep === 4 ? (
             <div className="space-y-4">
-              <h3 className="font-playfair text-xl text-chocolate mb-4">Your Custom Creation</h3>
+              <h3 className="font-playfair text-xl text-deep-chocolate mb-4">Your Custom Creation</h3>
               
               {selections.base && (
-                <div className="flex justify-between py-2 border-b border-chocolate/10">
-                  <span className="text-chocolate/70">Base</span>
-                  <span className="font-semibold text-chocolate">{selections.base}</span>
+                <div className="flex justify-between py-2 border-b border-deep-chocolate/10">
+                  <span className="text-deep-chocolate/70">Base</span>
+                  <span className="font-semibold text-deep-chocolate">{selections.base}</span>
                 </div>
               )}
               {selections.flavor && (
-                <div className="flex justify-between py-2 border-b border-chocolate/10">
-                  <span className="text-chocolate/70">Flavor</span>
-                  <span className="font-semibold text-chocolate">{selections.flavor}</span>
+                <div className="flex justify-between py-2 border-b border-deep-chocolate/10">
+                  <span className="text-deep-chocolate/70">Flavor</span>
+                  <span className="font-semibold text-deep-chocolate">{selections.flavor}</span>
                 </div>
               )}
               {selections.frosting && (
-                <div className="flex justify-between py-2 border-b border-chocolate/10">
-                  <span className="text-chocolate/70">Frosting</span>
-                  <span className="font-semibold text-chocolate">{selections.frosting}</span>
+                <div className="flex justify-between py-2 border-b border-deep-chocolate/10">
+                  <span className="text-deep-chocolate/70">Frosting</span>
+                  <span className="font-semibold text-deep-chocolate">{selections.frosting}</span>
                 </div>
               )}
               {(selections.toppings as string[]).length > 0 && (
-                <div className="flex justify-between py-2 border-b border-chocolate/10">
-                  <span className="text-chocolate/70">Toppings</span>
-                  <span className="font-semibold text-chocolate">{(selections.toppings as string[]).join(', ')}</span>
+                <div className="flex justify-between py-2 border-b border-deep-chocolate/10">
+                  <span className="text-deep-chocolate/70">Toppings</span>
+                  <span className="font-semibold text-deep-chocolate">{(selections.toppings as string[]).join(', ')}</span>
                 </div>
               )}
               
               <div className="flex justify-between py-2 mt-4">
-                <span className="font-playfair text-lg text-chocolate">Total</span>
-                <span className="font-bold text-mint text-xl">${(getPrice() / 100).toFixed(2)}</span>
+                <span className="font-playfair text-lg text-deep-chocolate">Total</span>
+                <span className="font-bold text-raspberry text-xl">${(getPrice() / 100).toFixed(2)}</span>
               </div>
               
               <button 
                 onClick={() => window.location.href = '#contact'}
-                className="w-full mt-4 px-6 py-3 bg-soft-pink text-chocolate rounded-full font-semibold hover:bg-gold transition-colors"
+                className="w-full mt-4 px-6 py-4 bg-raspberry text-white rounded-full font-semibold hover:bg-honey-gold transition-colors"
               >
                 Contact to Order
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 md:gap-4">
               {currentOptions.map((option) => {
               const optionName = typeof option === 'string' ? option : option.name;
               const optionPrice = typeof option === 'object' ? option.price : 0;
@@ -204,15 +212,15 @@ export default function Customizer() {
                   key={optionName}
                   onClick={() => handleSelect(optionName)}
                   className={cn(
-                    'p-4 rounded-xl border-2 transition-all text-left',
+                    'p-4 rounded-xl border-2 transition-all text-left min-h-[56px] flex flex-col justify-center',
                     isSelected(optionName)
-                      ? 'border-gold bg-gold/20 scale-105'
-                      : 'border-chocolate/10 bg-white hover:border-soft-pink'
+                      ? 'border-raspberry bg-raspberry/10 scale-105'
+                      : 'border-deep-chocolate/10 bg-white hover:border-raspberry hover:bg-raspberry/5'
                   )}
                 >
-                  <span className="font-semibold text-chocolate">{optionName}</span>
+                  <span className="font-semibold text-deep-chocolate">{optionName}</span>
                   {optionPrice > 0 && (
-                    <span className="block text-sm text-chocolate/60">
+                    <span className="text-sm text-deep-chocolate/60">
                       +${(optionPrice / 100).toFixed(2)}
                     </span>
                   )}
@@ -222,16 +230,15 @@ export default function Customizer() {
             </div>
           )}
 
-          {/* Navigation */}
           <div className="flex justify-between mt-6">
             <button
               onClick={handlePrev}
               disabled={currentStep === 0}
               className={cn(
-                'flex items-center gap-2 px-4 py-2 rounded-full transition-colors',
+                'flex items-center gap-2 px-4 py-3 rounded-full transition-colors',
                 currentStep === 0
-                  ? 'text-chocolate/30 cursor-not-allowed'
-                  : 'text-chocolate hover:bg-soft-pink/20'
+                  ? 'text-deep-chocolate/30 cursor-not-allowed'
+                  : 'text-deep-chocolate hover:bg-raspberry/20'
               )}
             >
               <ChevronLeft className="w-5 h-5" />
@@ -241,10 +248,10 @@ export default function Customizer() {
               onClick={handleNext}
               disabled={currentStep === STEPS.length - 1}
               className={cn(
-                'flex items-center gap-2 px-4 py-2 rounded-full transition-colors',
+                'flex items-center gap-2 px-4 py-3 rounded-full transition-colors',
                 currentStep === STEPS.length - 1
-                  ? 'text-chocolate/30 cursor-not-allowed'
-                  : 'text-chocolate hover:bg-soft-pink/20'
+                  ? 'text-deep-chocolate/30 cursor-not-allowed'
+                  : 'text-deep-chocolate hover:bg-raspberry/20'
               )}
             >
               Next
@@ -253,13 +260,12 @@ export default function Customizer() {
           </div>
         </div>
 
-        {/* Price Display */}
         <div className="text-center mt-8">
-          <p className="font-playfair text-2xl text-chocolate">
-            Total: <span className="text-mint font-bold">${(displayPrice / 100).toFixed(2)}</span>
+          <p className="font-playfair text-2xl text-deep-chocolate">
+            Total: <span className="text-raspberry font-bold">${(displayPrice / 100).toFixed(2)}</span>
           </p>
           {currentStep === STEPS.length - 1 && (
-            <button className="mt-4 px-8 py-3 bg-soft-pink text-chocolate rounded-full font-semibold flex items-center gap-2 mx-auto hover:bg-gold transition-colors">
+            <button className="mt-4 px-8 py-4 bg-raspberry text-white rounded-full font-semibold flex items-center gap-2 mx-auto hover:bg-honey-gold transition-colors">
               <ShoppingCart className="w-5 h-5" />
               Add to Cart
             </button>

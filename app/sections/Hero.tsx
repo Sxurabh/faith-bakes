@@ -8,20 +8,20 @@ import { useParallax } from '@/app/hooks/useParallax';
 
 const FLOATING_CIRCLE = (
   <svg viewBox="0 0 100 100" className="w-full h-full">
-    <circle cx="50" cy="50" r="40" fill="#FFB6C1" />
-    <circle cx="50" cy="45" r="30" fill="#FFF8E7" />
+    <circle cx="50" cy="50" r="40" fill="#D6336C" />
+    <circle cx="50" cy="45" r="30" fill="#FDF6E3" />
   </svg>
 );
 
 const FLOATING_RECT = (
   <svg viewBox="0 0 100 100" className="w-full h-full">
-    <rect x="20" y="30" width="60" height="50" rx="8" fill="#98D8C8" />
+    <rect x="20" y="30" width="60" height="50" rx="8" fill="#A8D5BA" />
   </svg>
 );
 
 const FLOATING_TRIANGLE = (
   <svg viewBox="0 0 100 100" className="w-full h-full">
-    <polygon points="50,10 90,90 10,90" fill="#FFD700" />
+    <polygon points="50,10 90,90 10,90" fill="#E5A84B" />
   </svg>
 );
 
@@ -85,13 +85,13 @@ export default function Hero() {
   const logoText = 'Faith Bakes';
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-cream to-soft-pink/20">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-warm-ivory to-raspberry/10">
       <BlobShape
-        color="pink"
-        className="absolute top-10 -left-20 w-96 h-96 opacity-20"
+        color="raspberry"
+        className="absolute top-10 -left-20 w-96 h-96 opacity-10"
       />
       <BlobShape
-        color="mint"
+        color="sage"
         className="absolute bottom-20 -right-20 w-80 h-80 opacity-15"
       />
       <BlobShape
@@ -114,7 +114,7 @@ export default function Hero() {
       <div className="relative z-10 text-center px-6 py-20">
         <h1
           ref={logoRef}
-          className="font-playfair text-5xl md:text-7xl lg:text-8xl font-bold text-chocolate mb-4 perspective-1000"
+          className="font-playfair text-5xl md:text-7xl lg:text-8xl font-bold text-deep-chocolate mb-4 perspective-1000"
           style={{ perspective: '1000px' }}
         >
           {logoText.split('').map((letter, index) => (
@@ -126,15 +126,14 @@ export default function Hero() {
 
         <p
           ref={subtitleRef}
-          className="font-nunito text-lg md:text-xl text-chocolate/70 mb-12 max-w-md mx-auto"
+          className="font-nunito text-lg md:text-xl text-deep-chocolate/70 mb-12 max-w-md mx-auto"
         >
           Handcrafted cupcakes, cakes, cookies & brownies made with love
         </p>
 
         <button
           ref={ctaRef}
-          className="font-nunito font-semibold text-lg px-8 py-4 bg-soft-pink text-chocolate rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 animate-bounce-subtle"
-          style={{ animationDuration: '2s' }}
+          className="font-nunito font-semibold text-lg px-8 py-4 bg-raspberry text-white rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 animate-squish"
           onClick={() => {
             document.getElementById('cupcakes')?.scrollIntoView({ behavior: 'smooth' });
           }}
@@ -144,7 +143,7 @@ export default function Hero() {
       </div>
 
       <div ref={scrollIndicatorRef} className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <div className="flex flex-col items-center gap-2 text-chocolate/50">
+        <div className="flex flex-col items-center gap-2 text-deep-chocolate/50">
           <span className="text-sm font-nunito">Scroll</span>
           <svg
             className="w-6 h-6 animate-pulse"

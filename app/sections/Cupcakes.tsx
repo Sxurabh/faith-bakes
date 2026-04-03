@@ -5,12 +5,24 @@ import { gsap, ScrollTrigger } from '@/app/lib/gsap';
 import { products } from '@/app/data/products';
 import AnimatedCard from '@/app/components/AnimatedCard';
 import ProductModal from '@/app/components/ProductModal';
+import CategoryNav from '@/app/components/CategoryNav';
+
+type Category = 'cupcakes' | 'cakes' | 'cookies' | 'brownies';
 
 export default function Cupcakes() {
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
   const [selectedProduct, setSelectedProduct] = useState<typeof products.cupcakes[0] | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string>('cupcakes');
+
+  const handleCategoryChange = (category: string) => {
+    setActiveCategory(category);
+    const element = document.getElementById(category);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -56,35 +68,39 @@ export default function Cupcakes() {
     return () => ctx.revert();
   }, []);
 
+  const currentProducts = products.cupcakes;
+
   return (
-    <section ref={sectionRef} id="cupcakes" className="py-20 px-6 bg-cream">
-      <h2 
-        ref={headingRef}
-        className="font-playfair text-4xl md:text-5xl text-center text-chocolate mb-12"
-      >
-        Our Cupcakes
-      </h2>
-      <div 
-        ref={cardsContainerRef}
-        className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-8 overflow-x-auto snap-x snap-mandatory pb-4 sm:pb-0 -mx-6 px-6 sm:mx-0 sm:px-0"
-      >
-        {products.cupcakes.map((cupcake, index) => (
-          <div key={cupcake.id} className="flex-shrink-0 w-[280px] sm:w-auto snap-center">
+    <>
+      <CategoryNav activeCategory={activeCategory} onCategoryChange={handleCategoryChange} />
+      <section ref={sectionRef} id="cupcakes" className="py-20 px-6 bg-warm-ivory pt-28">
+        <h2 
+          ref={headingRef}
+          className="font-playfair text-4xl md:text-5xl text-center text-deep-chocolate mb-12"
+        >
+          Our Cupcakes
+        </h2>
+        <div 
+          ref={cardsContainerRef}
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto"
+        >
+          {currentProducts.map((cupcake, index) => (
             <AnimatedCard
+              key={cupcake.id}
               image={cupcake.image}
               name={cupcake.name}
               description={cupcake.description}
               price={cupcake.basePrice}
               onQuickView={() => setSelectedProduct(cupcake)}
             />
-          </div>
-        ))}
-      </div>
-      <ProductModal
-        product={selectedProduct}
-        isOpen={!!selectedProduct}
-        onClose={() => setSelectedProduct(null)}
-      />
-    </section>
+          ))}
+        </div>
+        <ProductModal
+          product={selectedProduct}
+          isOpen={!!selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      </section>
+    </>
   );
 }

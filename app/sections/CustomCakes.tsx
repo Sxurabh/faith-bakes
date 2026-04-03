@@ -59,24 +59,24 @@ export default function CustomCakes() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="custom-cakes" className="py-20 px-6 bg-soft-pink/10">
+    <section ref={sectionRef} id="cakes" className="py-20 px-6 bg-soft-cream">
       <h2
         ref={headingRef}
-        className="font-playfair text-4xl md:text-5xl text-center text-chocolate mb-4"
+        className="font-playfair text-4xl md:text-5xl text-center text-deep-chocolate mb-4"
       >
         Custom Cakes
       </h2>
-      <p className="text-center text-chocolate/70 mb-12 max-w-2xl mx-auto">
+      <p className="text-center text-deep-chocolate/70 mb-12 max-w-2xl mx-auto">
         Design your dream cake with our custom cake builder
       </p>
       <div
         ref={cardsRef}
-        className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8 max-w-6xl mx-auto"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto"
       >
         {products.cakes.map((cake, index) => (
           <div
             key={cake.id}
-            className={`break-inside-avoid ${index === 0 ? 'lg:col-span-2' : ''}`}
+            className={index === 0 ? 'md:col-span-2 lg:col-span-2' : ''}
           >
             <AnimatedCard
               image={cake.image}
@@ -88,7 +88,7 @@ export default function CustomCakes() {
         ))}
       </div>
       <div className="text-center mt-12">
-        <button className="px-8 py-4 bg-gold text-chocolate rounded-full font-semibold text-lg hover:scale-105 hover:shadow-lg transition-all duration-300">
+        <button className="px-8 py-4 bg-honey-gold text-deep-chocolate rounded-full font-semibold text-lg hover:bg-raspberry hover:text-white hover:shadow-lg transition-all duration-300">
           Customize Yours
         </button>
       </div>

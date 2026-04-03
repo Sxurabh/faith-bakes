@@ -8,8 +8,7 @@ import AnimatedCard from '@/app/components/AnimatedCard';
 export default function CookiesBrownies() {
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const cookiesRef = useRef<HTMLDivElement>(null);
-  const browniesRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -32,38 +31,19 @@ export default function CookiesBrownies() {
         );
       }
 
-      if (cookiesRef.current) {
+      if (gridRef.current) {
         gsap.fromTo(
-          cookiesRef.current.children,
-          { x: -100, opacity: 0, scale: 0.8 },
+          gridRef.current.children,
+          { y: 30, opacity: 0, scale: 0.9 },
           {
-            x: 0,
+            y: 0,
             opacity: 1,
             scale: 1,
-            duration: 0.7,
-            stagger: 0.15,
-            ease: 'back.out(1.7)',
+            duration: 0.5,
+            stagger: 0.08,
+            ease: 'back.out(1.2)',
             scrollTrigger: {
-              trigger: cookiesRef.current,
-              start: 'top 80%',
-            },
-          }
-        );
-      }
-
-      if (browniesRef.current) {
-        gsap.fromTo(
-          browniesRef.current.children,
-          { x: 100, opacity: 0, scale: 0.8 },
-          {
-            x: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.7,
-            stagger: 0.15,
-            ease: 'back.out(1.7)',
-            scrollTrigger: {
-              trigger: browniesRef.current,
+              trigger: gridRef.current,
               start: 'top 80%',
             },
           }
@@ -74,49 +54,29 @@ export default function CookiesBrownies() {
     return () => ctx.revert();
   }, []);
 
+  const allProducts = [...products.cookies, ...products.brownies];
+
   return (
-    <section ref={sectionRef} id="cookies-brownies" className="py-20 px-6 bg-cream">
+    <section ref={sectionRef} id="brownies" className="py-20 px-6 bg-warm-ivory">
       <h2
         ref={headingRef}
-        className="font-playfair text-4xl md:text-5xl text-center text-chocolate mb-12"
+        className="font-playfair text-4xl md:text-5xl text-center text-deep-chocolate mb-12"
       >
         Cookies & Brownies
       </h2>
-
-      <div className="mb-16">
-        <h3 className="font-playfair text-2xl text-chocolate mb-8 text-center">Cookies</h3>
-        <div
-          ref={cookiesRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
-        >
-          {products.cookies.map((cookie) => (
-            <AnimatedCard
-              key={cookie.id}
-              image={cookie.image}
-              name={cookie.name}
-              description={cookie.description}
-              price={cookie.basePrice}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h3 className="font-playfair text-2xl text-chocolate mb-8 text-center">Brownies</h3>
-        <div
-          ref={browniesRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
-        >
-          {products.brownies.map((brownie) => (
-            <AnimatedCard
-              key={brownie.id}
-              image={brownie.image}
-              name={brownie.name}
-              description={brownie.description}
-              price={brownie.basePrice}
-            />
-          ))}
-        </div>
+      <div
+        ref={gridRef}
+        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto"
+      >
+        {allProducts.map((product) => (
+          <AnimatedCard
+            key={product.id}
+            image={product.image}
+            name={product.name}
+            description={product.description}
+            price={product.basePrice}
+          />
+        ))}
       </div>
     </section>
   );

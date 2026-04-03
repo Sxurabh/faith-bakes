@@ -1,124 +1,142 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { gsap } from '@/app/lib/gsap';
-import FloatingElement from '@/app/components/FloatingElement';
-import BlobShape from '@/app/components/BlobShape';
-import { useParallax } from '@/app/hooks/useParallax';
+import { Cake, Cookie, Croissant, Sparkles } from 'lucide-react';
+import MagneticButton from '@/app/components/MagneticButton';
 
-const FLOATING_CIRCLE = (
-  <svg viewBox="0 0 100 100" className="w-full h-full">
-    <circle cx="50" cy="50" r="40" fill="#D6336C" />
-    <circle cx="50" cy="45" r="30" fill="#FDF6E3" />
-  </svg>
-);
-
-const FLOATING_RECT = (
-  <svg viewBox="0 0 100 100" className="w-full h-full">
-    <rect x="20" y="30" width="60" height="50" rx="8" fill="#A8D5BA" />
-  </svg>
-);
-
-const FLOATING_TRIANGLE = (
-  <svg viewBox="0 0 100 100" className="w-full h-full">
-    <polygon points="50,10 90,90 10,90" fill="#E5A84B" />
-  </svg>
-);
+const FLOATING_ICONS = [
+  { Icon: Cake, color: '#FFB6C1', delay: 0, x: '10%', y: '20%' },
+  { Icon: Cookie, color: '#98D8C8', delay: 0.5, x: '85%', y: '15%' },
+  { Icon: Croissant, color: '#FFD700', delay: 1, x: '75%', y: '70%' },
+  { Icon: Sparkles, color: '#FFB6C1', delay: 1.5, x: '15%', y: '75%' },
+];
 
 export default function Hero() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLButtonElement>(null);
-  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
-  const parallax1 = useParallax(1);
-  const parallax2 = useParallax(0.7);
-  const parallax3 = useParallax(1.3);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Dramatic logo entrance - elastic bounce
       const letters = logoRef.current?.querySelectorAll('.logo-letter');
-      
-      if (letters && letters.length > 0) {
-        gsap.fromTo(
-          letters,
-          { y: 100, opacity: 0, rotateX: -90 },
+      if (letters) {
+        gsap.fromTo(letters,
+          { y: 150, opacity: 0, rotateX: -90, scale: 0.5 },
           {
             y: 0,
             opacity: 1,
             rotateX: 0,
-            duration: 0.8,
+            scale: 1,
+            duration: 1,
             stagger: 0.08,
-            ease: 'back.out(1.7)',
-            delay: 0.3,
+            ease: 'elastic.out(1, 0.5)',
+            delay: 0.3
           }
         );
       }
 
+      // Subtitle fade up
       if (subtitleRef.current) {
-        gsap.fromTo(
-          subtitleRef.current,
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.8, delay: 1.2, ease: 'power2.out' }
+        gsap.fromTo(subtitleRef.current,
+          { y: 50, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, delay: 1.5, ease: 'power2.out' }
         );
       }
 
-      if (ctaRef.current) {
-        gsap.fromTo(
-          ctaRef.current,
-          { y: 30, opacity: 0, scale: 0.8 },
-          { y: 0, opacity: 1, scale: 1, duration: 0.6, delay: 1.6, ease: 'back.out(1.7)' }
-        );
-      }
-
-      if (scrollIndicatorRef.current) {
-        gsap.fromTo(
-          scrollIndicatorRef.current,
-          { opacity: 0, y: -20 },
-          { opacity: 1, y: 0, duration: 0.6, delay: 2.2, ease: 'power2.out' }
-        );
-      }
-    });
+      // Floating icons animation
+      gsap.utils.toArray<HTMLElement>('.floating-icon').forEach((icon, i) => {
+        gsap.to(icon, {
+          y: 'random(-30, 30)',
+          x: 'random(-20, 20)',
+          rotation: 'random(-15, 15)',
+          duration: 'random(3, 5)',
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+          delay: i * 0.2
+        });
+      });
+    }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
   const logoText = 'Faith Bakes';
+  const parallaxOffset = (factor: number) => ({
+    transform: `translate(${(mousePos.x - window.innerWidth / 2) * factor}px, ${(mousePos.y - window.innerHeight / 2) * factor}px)`
+  });
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-warm-ivory to-raspberry/10">
-      <BlobShape
-        color="raspberry"
-        className="absolute top-10 -left-20 w-96 h-96 opacity-10"
-      />
-      <BlobShape
-        color="sage"
-        className="absolute bottom-20 -right-20 w-80 h-80 opacity-15"
-      />
-      <BlobShape
-        color="gold"
-        className="absolute top-1/3 right-10 w-48 h-48 opacity-10"
-      />
+    <section
+      ref={containerRef}
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden gradient-mesh"
+    >
+      {/* Animated Background Blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="absolute w-96 h-96 bg-soft-pink/30 rounded-full blur-3xl morph-blob"
+          style={{ top: '10%', left: '-10%', ...parallaxOffset(0.02) }}
+        />
+        <div
+          className="absolute w-80 h-80 bg-mint/30 rounded-full blur-3xl morph-blob"
+          style={{ bottom: '20%', right: '-5%', ...parallaxOffset(0.03) }}
+        />
+        <div
+          className="absolute w-64 h-64 bg-gold/20 rounded-full blur-3xl morph-blob"
+          style={{ top: '40%', right: '20%', ...parallaxOffset(0.025) }}
+        />
+      </div>
 
-      <FloatingElement delay="small" size="lg" className="absolute top-20 left-[10%]" parallaxOffset={parallax1}>
-        {FLOATING_CIRCLE}
-      </FloatingElement>
+      {/* Floating Icons */}
+      {FLOATING_ICONS.map(({ Icon, color, delay, x, y }, i) => (
+        <div
+          key={i}
+          className="floating-icon absolute hidden md:block"
+          style={{
+            left: x,
+            top: y,
+            color,
+            filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.1))',
+            ...parallaxOffset(0.04 * (i + 1))
+          }}
+        >
+          <Icon size={48 + i * 8} strokeWidth={1.5} />
+        </div>
+      ))}
 
-      <FloatingElement delay="medium" size="md" className="absolute top-40 right-[15%]" parallaxOffset={parallax2}>
-        {FLOATING_RECT}
-      </FloatingElement>
+      {/* Main Content */}
+      <div className="relative z-10 text-center px-6 py-20 max-w-5xl mx-auto">
+        <div className="mb-6 inline-block">
+          <span className="px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full text-sm font-semibold text-chocolate/70 shadow-lg border border-soft-pink/20">
+            ✨ Handcrafted with Love in Every Bite
+          </span>
+        </div>
 
-      <FloatingElement delay="large" size="md" className="absolute bottom-32 left-[20%]" parallaxOffset={parallax3}>
-        {FLOATING_TRIANGLE}
-      </FloatingElement>
-
-      <div className="relative z-10 text-center px-6 py-20">
         <h1
           ref={logoRef}
-          className="font-playfair text-5xl md:text-7xl lg:text-8xl font-bold text-deep-chocolate mb-4 perspective-1000"
+          className="font-playfair text-6xl md:text-8xl lg:text-9xl font-black text-chocolate mb-6 perspective-1000 leading-tight"
           style={{ perspective: '1000px' }}
         >
           {logoText.split('').map((letter, index) => (
-            <span key={index} className="logo-letter inline-block">
+            <span
+              key={index}
+              className="logo-letter inline-block hover:text-soft-pink transition-colors duration-300 cursor-default"
+              style={{
+                textShadow: '4px 4px 0px rgba(255,182,193,0.3)',
+                transformStyle: 'preserve-3d'
+              }}
+            >
               {letter === ' ' ? '\u00A0' : letter}
             </span>
           ))}
@@ -126,39 +144,47 @@ export default function Hero() {
 
         <p
           ref={subtitleRef}
-          className="font-nunito text-lg md:text-xl text-deep-chocolate/70 mb-12 max-w-md mx-auto"
+          className="font-nunito text-xl md:text-2xl text-chocolate/70 mb-12 max-w-2xl mx-auto leading-relaxed"
         >
-          Handcrafted cupcakes, cakes, cookies & brownies made with love
+          Where every cupcake tells a story, every cake celebrates a moment,
+          and every bite brings pure joy 🧁
         </p>
 
-        <button
-          ref={ctaRef}
-          className="font-nunito font-semibold text-lg px-8 py-4 bg-raspberry text-white rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 animate-squish"
-          onClick={() => {
-            document.getElementById('cupcakes')?.scrollIntoView({ behavior: 'smooth' });
-          }}
-        >
-          Explore Our Treats
-        </button>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <MagneticButton
+            variant="primary"
+            onClick={() => document.getElementById('cupcakes')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            <span>Explore Our Treats</span>
+            <span className="text-xl">🎂</span>
+          </MagneticButton>
+
+          <MagneticButton
+            variant="gold"
+            onClick={() => document.getElementById('customizer')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            <span>Design Your Own</span>
+            <span className="text-xl">✨</span>
+          </MagneticButton>
+        </div>
       </div>
 
-      <div ref={scrollIndicatorRef} className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <div className="flex flex-col items-center gap-2 text-deep-chocolate/50">
-          <span className="text-sm font-nunito">Scroll</span>
-          <svg
-            className="w-6 h-6 animate-pulse"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-chocolate/50 animate-bounce">
+        <span className="text-sm font-semibold">Scroll for sweetness</span>
+        <div className="w-6 h-10 border-2 border-chocolate/30 rounded-full flex justify-center pt-2">
+          <div className="w-1.5 h-3 bg-soft-pink rounded-full animate-pulse" />
         </div>
+      </div>
+
+      {/* Decorative Wave */}
+      <div className="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z"
+            fill="#FFF8E7"
+          />
+        </svg>
       </div>
     </section>
   );

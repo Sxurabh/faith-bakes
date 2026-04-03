@@ -3,38 +3,41 @@
 import { useState, useEffect, useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/app/lib/gsap';
 import { cn } from '@/app/lib/utils';
-import { ChevronRight, ChevronLeft, ShoppingCart, Cake, IceCream, Cookie, Sparkles } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Sparkles, Check, ShoppingBag } from 'lucide-react';
+import MagneticButton from '@/app/components/MagneticButton';
 
-const STEPS = [
-  { name: 'Base', icon: Cake },
-  { name: 'Flavor', icon: IceCream },
-  { name: 'Frosting', icon: Sparkles },
-  { name: 'Toppings', icon: Cookie },
-  { name: 'Preview', icon: Cake },
-];
+const STEPS = ['Base', 'Flavor', 'Frosting', 'Toppings', 'Preview'];
 
 const OPTIONS = {
   base: [
-    { name: 'Cupcake', price: 450 },
-    { name: '6" Cake', price: 4500 },
-    { name: '8" Cake', price: 5500 },
-    { name: 'Cookie Box (12)', price: 2500 },
+    { name: 'Cupcake', price: 450, icon: '🧁' },
+    { name: '6" Cake', price: 4500, icon: '🎂' },
+    { name: '8" Cake', price: 5500, icon: '🍰' },
+    { name: 'Cookie Box (12)', price: 2500, icon: '🍪' },
   ],
-  flavor: ['Vanilla', 'Chocolate', 'Strawberry', 'Red Velvet', 'Lemon'],
-  frosting: ['Buttercream', 'Cream Cheese', 'Ganache', 'Whipped Cream'],
-  toppings: ['Sprinkles', 'Chocolate Chips', 'Fresh Fruit', 'Edible Flowers'],
-};
-
-const TOPPING_PRICES: Record<string, number> = {
-  'Sprinkles': 50,
-  'Chocolate Chips': 75,
-  'Fresh Fruit': 100,
-  'Edible Flowers': 150,
+  flavor: [
+    { name: 'Vanilla', icon: '🤍' },
+    { name: 'Chocolate', icon: '🍫' },
+    { name: 'Strawberry', icon: '🍓' },
+    { name: 'Red Velvet', icon: '❤️' },
+    { name: 'Lemon', icon: '🍋' },
+  ],
+  frosting: [
+    { name: 'Buttercream', icon: '🧈' },
+    { name: 'Cream Cheese', icon: '🧀' },
+    { name: 'Ganache', icon: '🍫' },
+    { name: 'Whipped Cream', icon: '🥛' },
+  ],
+  toppings: [
+    { name: 'Sprinkles', price: 50, icon: '🌈' },
+    { name: 'Chocolate Chips', price: 75, icon: '🍫' },
+    { name: 'Fresh Fruit', price: 100, icon: '🍓' },
+    { name: 'Edible Flowers', price: 150, icon: '🌸' },
+  ],
 };
 
 export default function Customizer() {
   const sectionRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [selections, setSelections] = useState<Record<string, string | string[]>>({
     base: '',
@@ -43,12 +46,14 @@ export default function Customizer() {
     toppings: [],
   });
   const [displayPrice, setDisplayPrice] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const getPrice = () => {
     const baseOption = OPTIONS.base.find(o => o.name === selections.base);
     const basePrice = baseOption?.price || 0;
     const toppingsPrice = (selections.toppings as string[]).reduce(
-      (sum, t) => sum + (TOPPING_PRICES[t] || 0),
+      (sum, t) => sum + (OPTIONS.toppings.find(top => top.name === t)?.price || 0),
       0
     );
     return basePrice + toppingsPrice;
@@ -58,49 +63,44 @@ export default function Customizer() {
     const targetPrice = getPrice();
     const startPrice = displayPrice;
     const diff = targetPrice - startPrice;
-    
+
     if (diff === 0) return;
-    
-    const duration = 300;
+
+    const duration = 600;
     const startTime = Date.now();
-    
+
     const animate = () => {
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      setDisplayPrice(Math.round(startPrice + diff * progress));
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      setDisplayPrice(Math.round(startPrice + diff * easeProgress));
       if (progress < 1) requestAnimationFrame(animate);
     };
-    
+
     requestAnimationFrame(animate);
-  }, [getPrice]);
+  }, [selections]);
 
   useEffect(() => {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      if (headingRef.current) {
-        gsap.fromTo(
-          headingRef.current,
-          { y: 50, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: headingRef.current,
-              start: 'top 80%',
-            },
-          }
-        );
-      }
+      gsap.fromTo('.customizer-title',
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: '.customizer-title', start: 'top 85%' }
+        }
+      );
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   const handleSelect = (value: string) => {
-    const key = STEPS[currentStep].name.toLowerCase();
+    const key = STEPS[currentStep].toLowerCase();
     if (key === 'toppings') {
       const current = selections.toppings as string[];
       if (current.includes(value)) {
@@ -111,15 +111,44 @@ export default function Customizer() {
     } else {
       setSelections({ ...selections, [key]: value });
       if (currentStep < STEPS.length - 1) {
-        setTimeout(() => setCurrentStep(c => c + 1), 300);
+        setTimeout(() => {
+          setCurrentStep(c => c + 1);
+          // Animate content change
+          if (contentRef.current) {
+            gsap.fromTo(contentRef.current,
+              { opacity: 0, x: 50 },
+              { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out' }
+            );
+          }
+        }, 300);
       }
     }
   };
 
-  const handleNext = () => setCurrentStep(c => Math.min(c + 1, STEPS.length - 1));
-  const handlePrev = () => setCurrentStep(c => Math.max(c - 1, 0));
+  const handleNext = () => {
+    if (currentStep < STEPS.length - 1) {
+      setCurrentStep(c => c + 1);
+      animateContent();
+    }
+  };
 
-  const currentKey = STEPS[currentStep].name.toLowerCase();
+  const handlePrev = () => {
+    if (currentStep > 0) {
+      setCurrentStep(c => c - 1);
+      animateContent();
+    }
+  };
+
+  const animateContent = () => {
+    if (contentRef.current) {
+      gsap.fromTo(contentRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
+      );
+    }
+  };
+
+  const currentKey = STEPS[currentStep].toLowerCase();
   const currentOptions = OPTIONS[currentKey as keyof typeof OPTIONS] || [];
   const isSelected = (value: string) => {
     const sel = selections[currentKey];
@@ -127,149 +156,198 @@ export default function Customizer() {
     return sel === value;
   };
 
-  return (
-    <section ref={sectionRef} id="customizer" className="py-20 px-6 bg-soft-sage/30">
-      <h2
-        ref={headingRef}
-        className="font-playfair text-4xl md:text-5xl text-center text-deep-chocolate mb-12"
-      >
-        Design Your Treat
-      </h2>
+  const handleComplete = () => {
+    setIsComplete(true);
+    // Celebration animation
+    gsap.to('.completion-celebration', {
+      scale: 1,
+      opacity: 1,
+      duration: 0.6,
+      ease: 'back.out(2)'
+    });
+  };
 
-      <div className="max-w-2xl mx-auto">
-        <div className="flex justify-center gap-2 md:gap-4 mb-8 flex-wrap">
-          {STEPS.map((step, index) => {
-            const Icon = step.icon;
-            return (
-              <div
-                key={step.name}
-                className={cn(
-                  'flex items-center gap-2 px-3 py-2 rounded-full font-nunito text-sm transition-all',
-                  index === currentStep
-                    ? 'bg-raspberry text-white scale-110'
-                    : index < currentStep
-                    ? 'bg-honey-gold text-deep-chocolate'
-                    : 'bg-soft-cream text-deep-chocolate/50'
-                )}
-              >
-                <Icon className="w-4 h-4" />
-                <span className="hidden md:inline">{step.name}</span>
-              </div>
-            );
-          })}
+  return (
+    <section ref={sectionRef} id="customizer" className="py-24 px-6 bg-gradient-to-b from-mint/20 to-cream relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-10 left-10 w-20 h-20 border-4 border-soft-pink/30 rounded-full" />
+        <div className="absolute top-40 right-20 w-32 h-32 border-4 border-mint/30 rounded-full" />
+        <div className="absolute bottom-20 left-1/4 w-24 h-24 border-4 border-gold/30 rounded-full" />
+      </div>
+
+      <div className="max-w-4xl mx-auto relative z-10">
+        <div className="text-center mb-12">
+          <h2 className="customizer-title font-playfair text-5xl md:text-6xl font-bold text-chocolate mb-4">
+            Design Your <span className="text-mint">Treat</span>
+          </h2>
+          <p className="text-chocolate/60 text-lg">Step-by-step to your perfect creation</p>
         </div>
 
-        <div className="bg-soft-cream rounded-3xl p-6 shadow-lg">
-          {currentStep === 4 ? (
-            <div className="space-y-4">
-              <h3 className="font-playfair text-xl text-deep-chocolate mb-4">Your Custom Creation</h3>
-              
-              {selections.base && (
-                <div className="flex justify-between py-2 border-b border-deep-chocolate/10">
-                  <span className="text-deep-chocolate/70">Base</span>
-                  <span className="font-semibold text-deep-chocolate">{selections.base}</span>
-                </div>
+        {/* Progress Steps */}
+        <div className="flex justify-center gap-2 md:gap-4 mb-12 flex-wrap">
+          {STEPS.map((step, index) => (
+            <div
+              key={step}
+              onClick={() => index <= currentStep && setCurrentStep(index)}
+              className={cn(
+                'px-4 py-2 rounded-full font-nunito text-sm font-bold transition-all duration-300 cursor-pointer',
+                index === currentStep
+                  ? 'bg-soft-pink text-chocolate scale-110 shadow-lg'
+                  : index < currentStep
+                    ? 'bg-mint text-chocolate cursor-pointer hover:scale-105'
+                    : 'bg-cream text-chocolate/40'
               )}
-              {selections.flavor && (
-                <div className="flex justify-between py-2 border-b border-deep-chocolate/10">
-                  <span className="text-deep-chocolate/70">Flavor</span>
-                  <span className="font-semibold text-deep-chocolate">{selections.flavor}</span>
-                </div>
-              )}
-              {selections.frosting && (
-                <div className="flex justify-between py-2 border-b border-deep-chocolate/10">
-                  <span className="text-deep-chocolate/70">Frosting</span>
-                  <span className="font-semibold text-deep-chocolate">{selections.frosting}</span>
-                </div>
-              )}
-              {(selections.toppings as string[]).length > 0 && (
-                <div className="flex justify-between py-2 border-b border-deep-chocolate/10">
-                  <span className="text-deep-chocolate/70">Toppings</span>
-                  <span className="font-semibold text-deep-chocolate">{(selections.toppings as string[]).join(', ')}</span>
-                </div>
-              )}
-              
-              <div className="flex justify-between py-2 mt-4">
-                <span className="font-playfair text-lg text-deep-chocolate">Total</span>
-                <span className="font-bold text-raspberry text-xl">${(getPrice() / 100).toFixed(2)}</span>
+            >
+              <span className="hidden md:inline">{index + 1}. </span>
+              {step}
+            </div>
+          ))}
+        </div>
+
+        {/* Content Area */}
+        <div
+          ref={contentRef}
+          className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border-2 border-soft-pink/20"
+        >
+          {currentStep === 4 || isComplete ? (
+            <div className="text-center space-y-6">
+              <div className="w-24 h-24 bg-gradient-to-br from-soft-pink to-mint rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
+                <Sparkles className="w-12 h-12 text-white" />
               </div>
-              
-              <button 
-                onClick={() => window.location.href = '#contact'}
-                className="w-full mt-4 px-6 py-4 bg-raspberry text-white rounded-full font-semibold hover:bg-honey-gold transition-colors"
-              >
-                Contact to Order
-              </button>
+              <h3 className="font-playfair text-3xl font-bold text-chocolate">Your Creation is Ready! 🎉</h3>
+
+              <div className="bg-cream/50 rounded-2xl p-6 space-y-3 text-left max-w-md mx-auto">
+                {selections.base && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-chocolate/60">Base</span>
+                    <span className="font-bold text-chocolate flex items-center gap-2">
+                      {OPTIONS.base.find(b => b.name === selections.base)?.icon}
+                      {selections.base}
+                    </span>
+                  </div>
+                )}
+                {selections.flavor && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-chocolate/60">Flavor</span>
+                    <span className="font-bold text-chocolate flex items-center gap-2">
+                      {OPTIONS.flavor.find(f => f.name === selections.flavor)?.icon}
+                      {selections.flavor}
+                    </span>
+                  </div>
+                )}
+                {selections.frosting && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-chocolate/60">Frosting</span>
+                    <span className="font-bold text-chocolate flex items-center gap-2">
+                      {OPTIONS.frosting.find(f => f.name === selections.frosting)?.icon}
+                      {selections.frosting}
+                    </span>
+                  </div>
+                )}
+                {(selections.toppings as string[]).length > 0 && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-chocolate/60">Toppings</span>
+                    <span className="font-bold text-chocolate">
+                      {(selections.toppings as string[]).map(t =>
+                        OPTIONS.toppings.find(top => top.name === t)?.icon
+                      ).join(' ')}
+                    </span>
+                  </div>
+                )}
+                <div className="border-t-2 border-chocolate/10 pt-3 mt-3">
+                  <div className="flex justify-between items-center">
+                    <span className="font-playfair text-lg text-chocolate">Total</span>
+                    <span className="font-bold text-mint text-2xl">${(getPrice() / 100).toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-4 justify-center">
+                <MagneticButton variant="primary" onClick={() => window.location.href = '#contact'}>
+                  <ShoppingBag className="w-5 h-5" />
+                  Order Now
+                </MagneticButton>
+                <button
+                  onClick={() => { setIsComplete(false); setCurrentStep(0); setSelections({ base: '', flavor: '', frosting: '', toppings: [] }); }}
+                  className="px-6 py-4 border-2 border-chocolate/20 rounded-full font-bold text-chocolate hover:border-soft-pink hover:text-soft-pink transition-colors"
+                >
+                  Start Over
+                </button>
+              </div>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-3 md:gap-4">
-              {currentOptions.map((option) => {
-              const optionName = typeof option === 'string' ? option : option.name;
-              const optionPrice = typeof option === 'object' ? option.price : 0;
-              
-              return (
-                <button
-                  key={optionName}
-                  onClick={() => handleSelect(optionName)}
-                  className={cn(
-                    'p-4 rounded-xl border-2 transition-all text-left min-h-[56px] flex flex-col justify-center',
-                    isSelected(optionName)
-                      ? 'border-raspberry bg-raspberry/10 scale-105'
-                      : 'border-deep-chocolate/10 bg-white hover:border-raspberry hover:bg-raspberry/5'
-                  )}
-                >
-                  <span className="font-semibold text-deep-chocolate">{optionName}</span>
-                  {optionPrice > 0 && (
-                    <span className="text-sm text-deep-chocolate/60">
-                      +${(optionPrice / 100).toFixed(2)}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
+            <div>
+              <h3 className="font-playfair text-2xl text-chocolate mb-6 text-center">
+                Choose your {STEPS[currentStep]}
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                {currentOptions.map((option: any) => (
+                  <button
+                    key={option.name}
+                    onClick={() => handleSelect(option.name)}
+                    className={cn(
+                      'p-6 rounded-2xl border-2 transition-all duration-300 text-left hover:scale-105',
+                      isSelected(option.name)
+                        ? 'border-gold bg-gradient-to-br from-gold/20 to-soft-pink/20 shadow-lg scale-105'
+                        : 'border-chocolate/10 bg-cream/50 hover:border-soft-pink hover:shadow-md'
+                    )}
+                  >
+                    <div className="text-4xl mb-2">{option.icon}</div>
+                    <div className="font-bold text-chocolate mb-1">{option.name}</div>
+                    {option.price && (
+                      <div className="text-sm text-chocolate/60">+${(option.price / 100).toFixed(2)}</div>
+                    )}
+                    {isSelected(option.name) && (
+                      <div className="absolute top-2 right-2 w-6 h-6 bg-gold rounded-full flex items-center justify-center">
+                        <Check className="w-4 h-4 text-chocolate" />
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
-          <div className="flex justify-between mt-6">
-            <button
-              onClick={handlePrev}
-              disabled={currentStep === 0}
-              className={cn(
-                'flex items-center gap-2 px-4 py-3 rounded-full transition-colors',
-                currentStep === 0
-                  ? 'text-deep-chocolate/30 cursor-not-allowed'
-                  : 'text-deep-chocolate hover:bg-raspberry/20'
-              )}
-            >
-              <ChevronLeft className="w-5 h-5" />
-              Back
-            </button>
-            <button
-              onClick={handleNext}
-              disabled={currentStep === STEPS.length - 1}
-              className={cn(
-                'flex items-center gap-2 px-4 py-3 rounded-full transition-colors',
-                currentStep === STEPS.length - 1
-                  ? 'text-deep-chocolate/30 cursor-not-allowed'
-                  : 'text-deep-chocolate hover:bg-raspberry/20'
-              )}
-            >
-              Next
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+          {/* Navigation */}
+          {!isComplete && currentStep < 4 && (
+            <div className="flex justify-between mt-8">
+              <button
+                onClick={handlePrev}
+                disabled={currentStep === 0}
+                className={cn(
+                  'flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all',
+                  currentStep === 0
+                    ? 'text-chocolate/30 cursor-not-allowed'
+                    : 'text-chocolate hover:bg-soft-pink/20'
+                )}
+              >
+                <ChevronLeft className="w-5 h-5" />
+                Back
+              </button>
+              <button
+                onClick={handleNext}
+                disabled={currentStep === STEPS.length - 1}
+                className={cn(
+                  'flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all',
+                  currentStep === STEPS.length - 1
+                    ? 'text-chocolate/30 cursor-not-allowed'
+                    : 'text-chocolate hover:bg-soft-pink/20'
+                )}
+              >
+                Next
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          )}
         </div>
 
+        {/* Price Display */}
         <div className="text-center mt-8">
-          <p className="font-playfair text-2xl text-deep-chocolate">
-            Total: <span className="text-raspberry font-bold">${(displayPrice / 100).toFixed(2)}</span>
-          </p>
-          {currentStep === STEPS.length - 1 && (
-            <button className="mt-4 px-8 py-4 bg-raspberry text-white rounded-full font-semibold flex items-center gap-2 mx-auto hover:bg-honey-gold transition-colors">
-              <ShoppingCart className="w-5 h-5" />
-              Add to Cart
-            </button>
-          )}
+          <div className="inline-flex items-center gap-4 bg-white/80 backdrop-blur-sm px-8 py-4 rounded-full shadow-lg border border-soft-pink/20">
+            <span className="font-playfair text-xl text-chocolate">Current Total:</span>
+            <span className="font-bold text-mint text-3xl">${(displayPrice / 100).toFixed(2)}</span>
+          </div>
         </div>
       </div>
     </section>

@@ -2,14 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Faith Bakes | Handcrafted Cupcakes, Cakes, Cookies & Brownies',
-  description: 'Handcrafted cupcakes, cakes, cookies & brownies made with love. Custom designs for birthdays, weddings, and special occasions.',
-  keywords: ['cupcakes', 'cakes', 'cookies', 'brownies', 'baking', 'custom cakes', 'birthday cakes'],
-  openGraph: {
-    title: 'Faith Bakes | Handcrafted Treats',
-    description: 'Handcrafted cupcakes, cakes, cookies & brownies made with love',
-    type: 'website',
-  },
+  title: 'Faith Bakes | Handcrafted Joy in Every Bite',
+  description: 'Discover our delicious handcrafted cupcakes, custom cakes, cookies, and brownies. Made with love, delivered with joy!',
 };
 
 export default function RootLayout({
@@ -19,10 +13,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased">
-        <div className="paper-grain min-h-screen">
-          {children}
-        </div>
+      <body className="paper-grain min-h-screen bg-cream text-chocolate antialiased overflow-x-hidden">
+        {/* Custom Cursor */}
+        <div className="custom-cursor hidden md:block" id="cursor" />
+
+        {/* Ambient Particles Container */}
+        <div id="particles-container" className="fixed inset-0 pointer-events-none z-0 overflow-hidden" />
+
+        {children}
       </body>
     </html>
   );

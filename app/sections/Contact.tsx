@@ -75,7 +75,7 @@ export default function Contact() {
   };
 
   return (
-    <section ref={sectionRef} id="contact" className="py-20 px-6 bg-chocolate text-cream">
+    <section ref={sectionRef} id="contact" className="py-20 px-6 bg-deep-chocolate text-warm-ivory">
       <h2
         ref={headingRef}
         className="font-playfair text-4xl md:text-5xl text-center mb-12"
@@ -96,7 +96,7 @@ export default function Contact() {
             onChange={(e) => setFormState({ ...formState, name: e.target.value })}
             onFocus={() => setFocusedField('name')}
             onBlur={() => setFocusedField(null)}
-            className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-colors"
+            className="w-full px-4 pt-6 pb-2 bg-warm-ivory/10 border-2 border-warm-ivory/30 rounded-xl focus:border-honey-gold focus:outline-none peer placeholder-transparent transition-colors"
             placeholder="Your Name"
             required
           />
@@ -104,8 +104,8 @@ export default function Contact() {
             htmlFor="name"
             className={`absolute left-4 transition-all duration-200 pointer-events-none ${
               focusedField === 'name' || formState.name
-                ? 'top-2 text-xs text-gold'
-                : 'top-4 text-cream/70'
+                ? 'top-2 text-xs text-honey-gold'
+                : 'top-4 text-warm-ivory/70'
             }`}
           >
             Your Name
@@ -120,7 +120,7 @@ export default function Contact() {
             onChange={(e) => setFormState({ ...formState, email: e.target.value })}
             onFocus={() => setFocusedField('email')}
             onBlur={() => setFocusedField(null)}
-            className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-colors"
+            className="w-full px-4 pt-6 pb-2 bg-warm-ivory/10 border-2 border-warm-ivory/30 rounded-xl focus:border-honey-gold focus:outline-none peer placeholder-transparent transition-colors"
             placeholder="Your Email"
             required
           />
@@ -128,8 +128,8 @@ export default function Contact() {
             htmlFor="email"
             className={`absolute left-4 transition-all duration-200 pointer-events-none ${
               focusedField === 'email' || formState.email
-                ? 'top-2 text-xs text-gold'
-                : 'top-4 text-cream/70'
+                ? 'top-2 text-xs text-honey-gold'
+                : 'top-4 text-warm-ivory/70'
             }`}
           >
             Your Email
@@ -143,7 +143,7 @@ export default function Contact() {
             onChange={(e) => setFormState({ ...formState, message: e.target.value })}
             onFocus={() => setFocusedField('message')}
             onBlur={() => setFocusedField(null)}
-            className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-colors min-h-32 resize-none"
+            className="w-full px-4 pt-6 pb-2 bg-warm-ivory/10 border-2 border-warm-ivory/30 rounded-xl focus:border-honey-gold focus:outline-none peer placeholder-transparent transition-colors min-h-32 resize-none"
             placeholder="Your Message"
             required
           />
@@ -151,8 +151,8 @@ export default function Contact() {
             htmlFor="message"
             className={`absolute left-4 transition-all duration-200 pointer-events-none ${
               focusedField === 'message' || formState.message
-                ? 'top-2 text-xs text-gold'
-                : 'top-4 text-cream/70'
+                ? 'top-2 text-xs text-honey-gold'
+                : 'top-4 text-warm-ivory/70'
             }`}
           >
             Your Message
@@ -162,7 +162,7 @@ export default function Contact() {
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="w-full py-4 bg-soft-pink text-chocolate rounded-xl font-semibold text-lg flex items-center justify-center gap-2 hover:bg-gold transition-colors disabled:opacity-50 relative overflow-hidden"
+          className="w-full py-4 bg-raspberry text-white rounded-xl font-semibold text-lg flex items-center justify-center gap-2 hover:bg-honey-gold transition-colors disabled:opacity-50 relative overflow-hidden"
         >
           {status === 'loading' && (
             <>
@@ -187,10 +187,10 @@ export default function Contact() {
 
       {status === 'success' && (
         <div className="fixed inset-0 pointer-events-none flex items-center justify-center">
-          <div className="confetti-piece bg-gold w-3 h-3 rounded-full animate-confetti" style={{ '--delay': '0s', '--x': '-100px' } as React.CSSProperties} />
-          <div className="confetti-piece bg-soft-pink w-3 h-3 rounded-full animate-confetti" style={{ '--delay': '0.1s', '--x': '100px' } as React.CSSProperties} />
-          <div className="confetti-piece bg-mint w-3 h-3 rounded-full animate-confetti" style={{ '--delay': '0.2s', '--x': '-50px' } as React.CSSProperties} />
-          <div className="confetti-piece bg-cream w-3 h-3 rounded-full animate-confetti" style={{ '--delay': '0.3s', '--x': '50px' } as React.CSSProperties} />
+          <div className="confetti-piece bg-honey-gold w-3 h-3 rounded-full animate-confetti" style={{ '--delay': '0s', '--x': '-100px' } as React.CSSProperties} />
+          <div className="confetti-piece bg-raspberry w-3 h-3 rounded-full animate-confetti" style={{ '--delay': '0.1s', '--x': '100px' } as React.CSSProperties} />
+          <div className="confetti-piece bg-soft-sage w-3 h-3 rounded-full animate-confetti" style={{ '--delay': '0.2s', '--x': '-50px' } as React.CSSProperties} />
+          <div className="confetti-piece bg-warm-ivory w-3 h-3 rounded-full animate-confetti" style={{ '--delay': '0.3s', '--x': '50px' } as React.CSSProperties} />
         </div>
       )}
       

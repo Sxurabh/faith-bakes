@@ -72,9 +72,14 @@ export default function Hero() {
   }, []);
 
   const logoText = 'Faith Bakes';
-  const parallaxOffset = (factor: number) => ({
-    transform: `translate(${(mousePos.x - window.innerWidth / 2) * factor}px, ${(mousePos.y - window.innerHeight / 2) * factor}px)`
-  });
+  const parallaxOffset = (factor: number) => {
+    if (typeof window === 'undefined') {
+      return { transform: 'translate(0, 0)' };
+    }
+    return {
+      transform: `translate(${(mousePos.x - window.innerWidth / 2) * factor}px, ${(mousePos.y - window.innerHeight / 2) * factor}px)`
+    };
+  };
 
   return (
     <section

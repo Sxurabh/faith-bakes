@@ -80,18 +80,18 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
       aria-modal="true"
       aria-labelledby="modal-title"
     >
-      <div className="absolute inset-0 bg-chocolate/60 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-dark-brown/60 backdrop-blur-sm" />
       <div
         ref={modalRef}
-        className="relative bg-cream rounded-3xl p-6 max-w-md w-full shadow-2xl"
+        className="relative bg-cream rounded-3xl p-6 max-w-md w-full shadow-premium-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <button 
           onClick={onClose} 
-          className="absolute top-4 right-4 p-2 hover:bg-soft-pink/20 rounded-full transition-colors"
+          className="absolute top-4 right-4 p-2 hover:bg-rose-gold/20 rounded-full transition-colors"
           aria-label="Close modal"
         >
-          <X className="w-5 h-5 text-chocolate" />
+          <X className="w-5 h-5 text-dark-brown" />
         </button>
         <div className="relative h-64 rounded-2xl overflow-hidden mb-4">
           <Image 
@@ -102,11 +102,11 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
             sizes="(max-width: 640px) 100vw, 448px"
           />
         </div>
-        <h2 id="modal-title" className="font-playfair text-2xl font-bold text-chocolate mb-2">{product.name}</h2>
-        <p className="text-chocolate/70 mb-4">{product.description}</p>
+        <h2 id="modal-title" className="font-playfair text-2xl font-bold text-dark-brown mb-2">{product.name}</h2>
+        <p className="text-dark-brown/70 mb-4">{product.description}</p>
         <div className="flex items-center justify-between">
-          <span className="font-nunito text-xl font-bold text-mint">${((product.price ?? product.basePrice ?? 0) / 100).toFixed(2)}</span>
-          <button className="px-6 py-2 bg-soft-pink text-chocolate rounded-full font-semibold hover:bg-gold transition-colors">
+          <span className="font-nunito text-xl font-bold text-rose-gold">${((product.price ?? product.basePrice ?? 0) / 100).toFixed(2)}</span>
+          <button className="px-6 py-2 bg-rose-gold text-cream rounded-full font-semibold hover:bg-terracotta transition-colors shadow-premium">
             Order Now
           </button>
         </div>

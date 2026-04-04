@@ -40,7 +40,7 @@ export default function ScrollReveal({
           rotate: 0,
           duration,
           delay,
-          ease: 'back.out(1.4)',
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: ref.current,
             start: 'top 85%',

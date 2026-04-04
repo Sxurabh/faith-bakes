@@ -45,9 +45,9 @@ export default function MagneticButton({
     };
 
     const variantClasses = {
-        primary: 'bg-soft-pink text-chocolate hover:bg-mint',
-        secondary: 'bg-chocolate text-cream hover:bg-chocolate/80',
-        gold: 'bg-gold text-chocolate hover:bg-soft-pink'
+        primary: 'bg-rose-gold text-dark-brown hover:bg-terracotta hover:shadow-premium-lg',
+        secondary: 'bg-dark-brown text-cream hover:bg-charcoal hover:shadow-premium-lg',
+        gold: 'bg-terracotta text-cream hover:bg-rose-gold hover:shadow-premium-lg'
     };
 
     return (
@@ -57,13 +57,13 @@ export default function MagneticButton({
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={handleMouseLeave}
             onClick={onClick}
-            className={`magnetic-btn px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 ${variantClasses[variant]} ${className} ${isHovered ? 'scale-110 shadow-2xl' : 'shadow-lg'}`}
+            className={`magnetic-btn px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 ${variantClasses[variant]} ${className} ${isHovered ? 'scale-105 shadow-premium-lg' : 'shadow-premium'}`}
         >
             <span className="relative z-10 flex items-center gap-2">
                 {children}
             </span>
             {isHovered && (
-                <div className="absolute inset-0 rounded-full bg-white/20 animate-pulse" />
+                <div className="absolute inset-0 rounded-full bg-white/10 animate-pulse" />
             )}
         </button>
     );

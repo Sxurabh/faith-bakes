@@ -8,41 +8,46 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'soft-pink': '#FFB6C1',
-        cream: '#FFF8E7',
-        mint: '#98D8C8',
-        chocolate: '#5D4037',
-        gold: '#FFD700',
+        'dark-brown': '#2C2420',
+        charcoal: '#3A3A3A',
+        'rose-gold': '#D4A574',
+        terracotta: '#C85A3A',
+        sage: '#A8B8A8',
+        'warm-beige': '#E8DCC4',
+        cream: '#FAF8F3',
+        /* Legacy colors for backward compatibility */
+        'soft-pink': '#E8C4D4',
+        mint: '#B8D4CC',
+        chocolate: '#2C2420',
+        gold: '#D4A574',
       },
       fontFamily: {
         playfair: ['Playfair Display', 'serif'],
         nunito: ['Nunito', 'sans-serif'],
       },
       animation: {
-        float: 'float 6s ease-in-out infinite',
-        'float-delayed': 'float 6s ease-in-out 2s infinite',
-        'float-slow': 'float 8s ease-in-out 1s infinite',
-        pulse: 'pulse 2s ease-in-out infinite',
-        'bounce-in': 'bounceIn 0.6s ease-out',
-        wobble: 'wobble 0.5s ease-in-out',
+        float: 'float 8s ease-in-out infinite',
+        'float-delayed': 'float 8s ease-in-out 2s infinite',
+        'float-slow': 'float 10s ease-in-out 1s infinite',
+        pulse: 'pulse 3s ease-in-out infinite',
+        'bounce-in': 'elegant-in 0.6s cubic-bezier(0, 0.3, 0.3, 1)',
+        wobble: 'subtle-tilt 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
         shimmer: 'shimmer 2s infinite',
         morph: 'morph 8s ease-in-out infinite',
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
-          '50%': { transform: 'translateY(-20px) rotate(5deg)' },
+          '50%': { transform: 'translateY(-15px) rotate(3deg)' },
         },
-        bounceIn: {
-          '0%': { transform: 'scale(0.3)', opacity: '0' },
-          '50%': { transform: 'scale(1.05)' },
-          '70%': { transform: 'scale(0.9)' },
-          '100%': { transform: 'scale(1)', opacity: '1' },
+        'elegant-in': {
+          '0%': { transform: 'scale(0.95) translateY(10px)', opacity: '0' },
+          '100%': { transform: 'scale(1) translateY(0)', opacity: '1' },
         },
-        wobble: {
+        'subtle-tilt': {
           '0%, 100%': { transform: 'rotate(0deg)' },
-          '25%': { transform: 'rotate(-3deg)' },
-          '75%': { transform: 'rotate(3deg)' },
+          '25%': { transform: 'rotate(-1.5deg)' },
+          '75%': { transform: 'rotate(1.5deg)' },
         },
         shimmer: {
           '0%': { backgroundPosition: '-200% 0' },
@@ -52,6 +57,10 @@ const config: Config = {
           '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
           '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
         },
+      },
+      boxShadow: {
+        'premium': '0 4px 20px rgba(44, 36, 32, 0.08)',
+        'premium-lg': '0 8px 32px rgba(44, 36, 32, 0.12)',
       },
     },
   },

@@ -5,14 +5,26 @@
 @tailwind utilities;
 
 :root {
-  --color-soft-pink: #FFB6C1;
-  --color-cream: #FFF8E7;
-  --color-mint: #98D8C8;
-  --color-chocolate: #5D4037;
-  --color-gold: #FFD700;
-  --elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Primary Colors - Premium Bakery */
+  --color-dark-brown: #2C2420;
+  --color-charcoal: #3A3A3A;
+  --color-rose-gold: #D4A574;
+  --color-terracotta: #C85A3A;
+  --color-sage: #A8B8A8;
+  --color-warm-beige: #E8DCC4;
+  --color-cream: #FAF8F3;
+  
+  /* Legacy colors for gradients (toned down) */
+  --color-soft-pink: #E8C4D4;
+  --color-mint: #B8D4CC;
+  --color-chocolate: #2C2420;
+  --color-gold: #D4A574;
+  
+  /* Easing Functions - Premium animations */
   --smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --smooth-in: cubic-bezier(0.7, 0, 1, 0.3);
+  --smooth-out: cubic-bezier(0, 0.3, 0.3, 1);
+  --elegant: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 * {
@@ -31,7 +43,7 @@ body {
   overflow-x: hidden;
   font-family: 'Nunito', sans-serif;
   background-color: var(--color-cream);
-  color: var(--color-chocolate);
+  color: var(--color-dark-brown);
 }
 
 body {
@@ -56,19 +68,19 @@ body {
 .custom-cursor {
   width: 20px;
   height: 20px;
-  border: 2px solid var(--color-chocolate);
+  border: 2px solid var(--color-dark-brown);
   border-radius: 50%;
   position: fixed;
   pointer-events: none;
   z-index: 9999;
-  transition: transform 0.15s var(--elastic), background 0.15s;
+  transition: transform 0.2s var(--smooth), background 0.2s var(--smooth);
   mix-blend-mode: difference;
 }
 
 .custom-cursor.hovering {
   transform: scale(2);
-  background: var(--color-soft-pink);
-  border-color: var(--color-soft-pink);
+  background: var(--color-rose-gold);
+  border-color: var(--color-rose-gold);
 }
 
 /* Grain Texture */
@@ -86,21 +98,20 @@ body {
   z-index: 1;
 }
 
-/* Gradient Mesh Background */
+/* Gradient Mesh Background - Subtle Premium */
 .gradient-mesh {
   background:
-    radial-gradient(at 40% 20%, rgba(255, 182, 193, 0.4) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(152, 216, 200, 0.3) 0px, transparent 50%),
-    radial-gradient(at 0% 50%, rgba(255, 215, 0, 0.2) 0px, transparent 50%),
-    radial-gradient(at 80% 50%, rgba(255, 182, 193, 0.3) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(152, 216, 200, 0.4) 0px, transparent 50%),
-    #FFF8E7;
+    radial-gradient(at 40% 20%, rgba(212, 165, 116, 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(168, 184, 168, 0.12) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(200, 90, 58, 0.08) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(212, 165, 116, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(168, 184, 168, 0.15) 0px, transparent 50%),
+    #FAF8F3;
   background-size: 200% 200%;
-  animation: meshMove 20s ease infinite;
+  animation: meshMove 25s ease-in-out infinite;
 }
 
 @keyframes meshMove {
-
   0%,
   100% {
     background-position: 0% 50%;
@@ -111,39 +122,39 @@ body {
   }
 }
 
-/* Floating Particles */
+/* Floating Particles - Reduced and Refined */
 .particle {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
-  animation: float-particle 15s infinite ease-in-out;
+  animation: float-particle 20s infinite ease-in-out;
+  opacity: 0.15;
 }
 
 @keyframes float-particle {
-
   0%,
   100% {
     transform: translateY(0) translateX(0) rotate(0deg);
-    opacity: 0.6;
+    opacity: 0.15;
   }
 
   25% {
-    transform: translateY(-30px) translateX(20px) rotate(90deg);
-    opacity: 0.8;
+    transform: translateY(-20px) translateX(15px) rotate(90deg);
+    opacity: 0.2;
   }
 
   50% {
-    transform: translateY(-20px) translateX(-20px) rotate(180deg);
-    opacity: 0.6;
+    transform: translateY(-15px) translateX(-15px) rotate(180deg);
+    opacity: 0.15;
   }
 
   75% {
-    transform: translateY(-40px) translateX(10px) rotate(270deg);
-    opacity: 0.9;
+    transform: translateY(-30px) translateX(8px) rotate(270deg);
+    opacity: 0.2;
   }
 }
 
-/* 3D Flip Card Styles */
+/* 3D Flip Card Styles - Refined */
 .flip-card {
   perspective: 1000px;
   transform-style: preserve-3d;
@@ -153,7 +164,7 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.8s var(--elastic);
+  transition: transform 0.6s var(--smooth);
   transform-style: preserve-3d;
 }
 
@@ -174,7 +185,7 @@ body {
 
 .flip-card-back {
   transform: rotateY(180deg);
-  background: linear-gradient(135deg, var(--color-soft-pink), var(--color-mint));
+  background: linear-gradient(135deg, var(--color-rose-gold), var(--color-sage));
 }
 
 /* Holographic Shimmer */
@@ -202,85 +213,77 @@ body {
   transform: rotate(45deg) translateX(100%);
 }
 
-/* Magnetic Button */
+/* Magnetic Button - Refined */
 .magnetic-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s var(--elastic);
+  transition: transform 0.3s var(--smooth), box-shadow 0.3s var(--smooth);
 }
 
 .magnetic-btn::before {
   content: '';
   position: absolute;
   inset: -2px;
-  background: linear-gradient(135deg, var(--color-soft-pink), var(--color-mint), var(--color-gold));
+  background: linear-gradient(135deg, var(--color-rose-gold), var(--color-terracotta), var(--color-sage));
   border-radius: inherit;
   z-index: -1;
   opacity: 0;
-  transition: opacity 0.3s;
-  filter: blur(8px);
+  transition: opacity 0.3s var(--smooth);
+  filter: blur(6px);
 }
 
 .magnetic-btn:hover::before {
-  opacity: 0.6;
+  opacity: 0.4;
 }
 
-/* Elastic Typography */
+/* Elegant Typography */
 .elastic-text {
   display: inline-block;
-  transition: transform 0.3s var(--elastic);
+  transition: transform 0.3s var(--smooth), color 0.3s var(--smooth);
 }
 
 .elastic-text:hover {
-  transform: scale(1.1) rotate(-2deg);
+  transform: scale(1.05);
+  color: var(--color-rose-gold);
 }
 
-/* Wobble Animation */
-@keyframes wobble {
-
+/* Subtle Tilt Animation */
+@keyframes subtle-tilt {
   0%,
   100% {
     transform: rotate(0deg);
   }
 
   25% {
-    transform: rotate(-3deg);
+    transform: rotate(-1.5deg);
   }
 
   75% {
-    transform: rotate(3deg);
+    transform: rotate(1.5deg);
   }
 }
 
 .wobble-hover:hover {
-  animation: wobble 0.5s ease-in-out;
+  animation: subtle-tilt 0.4s var(--smooth);
 }
 
-/* Bounce In */
-@keyframes bounceIn {
+/* Elegant Fade & Scale In */
+@keyframes elegant-in {
   0% {
-    transform: scale(0.3);
+    transform: scale(0.95) translateY(10px);
     opacity: 0;
   }
 
-  50% {
-    transform: scale(1.05);
-  }
-
-  70% {
-    transform: scale(0.9);
-  }
-
   100% {
-    transform: scale(1);
+    transform: scale(1) translateY(0);
     opacity: 1;
   }
 }
 
 .bounce-in {
-  animation: bounceIn 0.6s var(--bounce);
+  animation: elegant-in 0.6s var(--smooth-out);
 }
 
 /* Confetti */
@@ -304,18 +307,18 @@ body {
   }
 }
 
-/* Glow Effects */
+/* Glow Effects - Refined */
 .glow-pink {
-  box-shadow: 0 0 20px rgba(255, 182, 193, 0.5), 0 0 40px rgba(255, 182, 193, 0.3);
+  box-shadow: 0 0 20px rgba(212, 165, 116, 0.3), 0 0 40px rgba(212, 165, 116, 0.15);
 }
 
 .glow-mint {
-  box-shadow: 0 0 20px rgba(152, 216, 200, 0.5), 0 0 40px rgba(152, 216, 200, 0.3);
+  box-shadow: 0 0 20px rgba(168, 184, 168, 0.3), 0 0 40px rgba(168, 184, 168, 0.15);
 }
 
-/* Text Gradient */
+/* Text Gradient - Premium */
 .text-gradient {
-  background: linear-gradient(135deg, var(--color-chocolate), var(--color-soft-pink));
+  background: linear-gradient(135deg, var(--color-dark-brown), var(--color-rose-gold));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -355,7 +358,7 @@ body {
   }
 }
 
-/* Scrollbar Styling */
+/* Scrollbar Styling - Premium */
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -365,11 +368,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-soft-pink);
+  background: var(--color-rose-gold);
   border-radius: 6px;
   border: 3px solid var(--color-cream);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-mint);
+  background: var(--color-terracotta);
 }

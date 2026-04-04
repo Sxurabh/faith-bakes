@@ -75,9 +75,9 @@ export default function Contact() {
   };
 
   return (
-    <section ref={sectionRef} id="contact" className="py-24 px-6 bg-chocolate text-cream relative overflow-hidden">
-      {/* Decorative Background */}
-      <div className="absolute inset-0 opacity-10">
+    <section ref={sectionRef} id="contact" className="py-24 px-6 bg-dark-brown text-cream relative overflow-hidden">
+      {/* Decorative Background - Reduced opacity */}
+      <div className="absolute inset-0 opacity-5">
         <div className="absolute top-10 left-10 text-6xl rotate-12">🧁</div>
         <div className="absolute top-40 right-20 text-6xl -rotate-12">🍰</div>
         <div className="absolute bottom-20 left-1/4 text-6xl rotate-45">🍪</div>
@@ -86,8 +86,8 @@ export default function Contact() {
 
       <div className="max-w-2xl mx-auto relative z-10">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-cream/10 rounded-full mb-4">
-            <Heart className="w-4 h-4 text-soft-pink" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-rose-gold/15 rounded-full mb-4">
+            <Heart className="w-4 h-4 text-rose-gold" />
             <span className="text-sm font-semibold text-cream/70">We&apos;d love to hear from you</span>
           </div>
           <h2 className="contact-title font-playfair text-5xl md:text-6xl font-bold mb-4">
@@ -109,14 +109,14 @@ export default function Contact() {
               onChange={(e) => setFormState({ ...formState, name: e.target.value })}
               onFocus={() => setFocusedField('name')}
               onBlur={() => setFocusedField(null)}
-              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-all duration-300"
+              className="w-full px-4 pt-6 pb-2 bg-cream/10 border border-cream/30 rounded-xl focus:border-rose-gold focus:outline-none peer placeholder-transparent transition-all duration-300"
               placeholder="Your Name"
               required
             />
             <label
               htmlFor="name"
               className={`absolute left-4 transition-all duration-300 pointer-events-none ${focusedField === 'name' || formState.name
-                ? 'top-2 text-xs text-gold font-bold'
+                ? 'top-2 text-xs text-rose-gold font-bold'
                 : 'top-4 text-cream/70'
                 }`}
             >
@@ -125,7 +125,7 @@ export default function Contact() {
                 Your Name
               </span>
             </label>
-            <div className="absolute bottom-0 left-0 h-0.5 bg-gold transition-all duration-300 w-0 peer-focus:w-full" />
+            <div className="absolute bottom-0 left-0 h-0.5 bg-rose-gold transition-all duration-300 w-0 peer-focus:w-full" />
           </div>
 
           <div className="form-field relative group">
@@ -136,14 +136,14 @@ export default function Contact() {
               onChange={(e) => setFormState({ ...formState, email: e.target.value })}
               onFocus={() => setFocusedField('email')}
               onBlur={() => setFocusedField(null)}
-              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-all duration-300"
+              className="w-full px-4 pt-6 pb-2 bg-cream/10 border border-cream/30 rounded-xl focus:border-rose-gold focus:outline-none peer placeholder-transparent transition-all duration-300"
               placeholder="Your Email"
               required
             />
             <label
               htmlFor="email"
               className={`absolute left-4 transition-all duration-300 pointer-events-none ${focusedField === 'email' || formState.email
-                ? 'top-2 text-xs text-gold font-bold'
+                ? 'top-2 text-xs text-rose-gold font-bold'
                 : 'top-4 text-cream/70'
                 }`}
             >
@@ -152,7 +152,7 @@ export default function Contact() {
                 Your Email
               </span>
             </label>
-            <div className="absolute bottom-0 left-0 h-0.5 bg-gold transition-all duration-300 w-0 peer-focus:w-full" />
+            <div className="absolute bottom-0 left-0 h-0.5 bg-rose-gold transition-all duration-300 w-0 peer-focus:w-full" />
           </div>
 
           <div className="form-field relative group">
@@ -162,14 +162,14 @@ export default function Contact() {
               onChange={(e) => setFormState({ ...formState, message: e.target.value })}
               onFocus={() => setFocusedField('message')}
               onBlur={() => setFocusedField(null)}
-              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-all duration-300 min-h-32 resize-none"
+              className="w-full px-4 pt-6 pb-2 bg-cream/10 border border-cream/30 rounded-xl focus:border-rose-gold focus:outline-none peer placeholder-transparent transition-all duration-300 min-h-32 resize-none"
               placeholder="Your Message"
               required
             />
             <label
               htmlFor="message"
               className={`absolute left-4 transition-all duration-300 pointer-events-none ${focusedField === 'message' || formState.message
-                ? 'top-2 text-xs text-gold font-bold'
+                ? 'top-2 text-xs text-rose-gold font-bold'
                 : 'top-4 text-cream/70'
                 }`}
             >
@@ -178,18 +178,18 @@ export default function Contact() {
                 Your Message
               </span>
             </label>
-            <div className="absolute bottom-0 left-0 h-0.5 bg-gold transition-all duration-300 w-0 peer-focus:w-full" />
+            <div className="absolute bottom-0 left-0 h-0.5 bg-rose-gold transition-all duration-300 w-0 peer-focus:w-full" />
           </div>
 
           <div className="form-field">
             {status === 'success' ? (
-              <div className="w-full py-4 bg-mint text-chocolate rounded-xl font-bold text-lg flex items-center justify-center gap-2 animate-bounce">
+              <div className="w-full py-4 bg-sage text-dark-brown rounded-xl font-bold text-lg flex items-center justify-center gap-2 animate-bounce">
                 <CheckCircle className="w-6 h-6" />
-                <span>Message Sent! We&apos;ll be in touch soon 🎉</span>
+                <span>Message Sent! We&apos;ll be in touch soon</span>
               </div>
             ) : (
               <MagneticButton
-                variant="gold"
+                variant="primary"
                 className="w-full"
               >
                 {status === 'loading' ? (
@@ -213,8 +213,8 @@ export default function Contact() {
           <div className="fixed inset-0 pointer-events-none flex items-center justify-center z-50">
             <div className="text-center animate-bounce">
               <div className="text-8xl mb-4">🎉</div>
-              <div className="text-2xl font-bold text-chocolate bg-white/90 px-6 py-3 rounded-full shadow-2xl">
-                Thank you! ✨
+              <div className="text-2xl font-bold text-dark-brown bg-rose-gold/90 px-6 py-3 rounded-full shadow-2xl">
+                Thank you!
               </div>
             </div>
           </div>
@@ -222,15 +222,15 @@ export default function Contact() {
 
         {/* Additional Contact Info */}
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-          <div className="p-4 bg-cream/10 rounded-2xl hover:bg-cream/20 transition-colors">
+          <div className="p-4 bg-rose-gold/10 rounded-2xl hover:bg-rose-gold/20 transition-colors">
             <div className="text-3xl mb-2">📧</div>
             <div className="font-bold text-sm">hello@faithbakes.com</div>
           </div>
-          <div className="p-4 bg-cream/10 rounded-2xl hover:bg-cream/20 transition-colors">
+          <div className="p-4 bg-rose-gold/10 rounded-2xl hover:bg-rose-gold/20 transition-colors">
             <div className="text-3xl mb-2">📱</div>
             <div className="font-bold text-sm">+1 (555) 123-4567</div>
           </div>
-          <div className="p-4 bg-cream/10 rounded-2xl hover:bg-cream/20 transition-colors">
+          <div className="p-4 bg-rose-gold/10 rounded-2xl hover:bg-rose-gold/20 transition-colors">
             <div className="text-3xl mb-2">📍</div>
             <div className="font-bold text-sm">Baker&apos;s Street, NY</div>
           </div>

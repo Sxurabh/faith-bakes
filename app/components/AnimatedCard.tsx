@@ -58,7 +58,7 @@ export default function AnimatedCard({ image, name, description, price, onQuickV
       onMouseLeave={handleMouseLeave}
       style={{ transformStyle: 'preserve-3d' }}
     >
-      <div className="relative overflow-hidden rounded-3xl bg-soft-cream shadow-lg transition-shadow duration-300 group-hover:shadow-xl">
+      <div className="relative overflow-hidden rounded-3xl bg-cream shadow-premium transition-shadow duration-300 group-hover:shadow-premium-lg">
         <div className="relative aspect-square overflow-hidden">
           <Image
             src={image}
@@ -66,19 +66,19 @@ export default function AnimatedCard({ image, name, description, price, onQuickV
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-deep-chocolate/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark-brown/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
         
         <div className="p-5">
-          <h3 className="font-playfair text-xl font-semibold text-deep-chocolate mb-2">
+          <h3 className="font-playfair text-xl font-semibold text-dark-brown mb-2">
             {name}
           </h3>
-          <p className="text-deep-chocolate/70 text-sm mb-3 line-clamp-2">
+          <p className="text-dark-brown/70 text-sm mb-3 line-clamp-2">
             {description}
           </p>
           
           <div className="flex items-center justify-between">
-            <span className="font-nunito font-bold text-raspberry text-lg">
+            <span className="font-nunito font-bold text-rose-gold text-lg">
               ${(price / 100).toFixed(2)}
             </span>
             {onQuickView && (
@@ -87,7 +87,7 @@ export default function AnimatedCard({ image, name, description, price, onQuickV
                   e.stopPropagation();
                   onQuickView();
                 }}
-                className="px-4 py-2 bg-honey-gold text-deep-chocolate rounded-full text-sm font-semibold hover:bg-raspberry hover:text-white transition-colors"
+                className="px-4 py-2 bg-rose-gold text-cream rounded-full text-sm font-semibold hover:bg-terracotta transition-colors"
               >
                 Quick View
               </button>

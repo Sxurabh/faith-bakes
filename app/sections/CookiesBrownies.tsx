@@ -13,27 +13,25 @@ export default function CookiesBrownies() {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Bounce in from edges
+      // Smooth fade and scale entrance
       gsap.utils.toArray<HTMLElement>('.bounce-item').forEach((item, i) => {
-        const isLeft = i % 2 === 0;
         gsap.fromTo(item,
           {
-            x: isLeft ? -200 : 200,
+            y: 60,
             opacity: 0,
-            scale: 0.5,
-            rotation: isLeft ? -20 : 20
+            scale: 0.95
           },
           {
-            x: 0,
+            y: 0,
             opacity: 1,
             scale: 1,
-            rotation: 0,
-            duration: 0.8,
-            ease: 'back.out(1.7)',
+            duration: 0.6,
+            ease: 'power2.out',
             scrollTrigger: {
               trigger: item,
               start: 'top 85%',
-            }
+            },
+            delay: i * 0.08
           }
         );
       });
@@ -46,18 +44,18 @@ export default function CookiesBrownies() {
     <section ref={sectionRef} id="cookies-brownies" className="py-24 px-6 bg-cream relative">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="font-playfair text-5xl md:text-6xl font-bold text-chocolate mb-4">
-            Cookies & <span className="text-mint">Brownies</span>
+          <h2 className="font-playfair text-5xl md:text-6xl font-bold text-dark-brown mb-4">
+            Cookies & <span className="text-rose-gold">Brownies</span>
           </h2>
-          <p className="text-chocolate/60 text-lg">Bite-sized happiness, baked to perfection</p>
+          <p className="text-dark-brown/60 text-lg">Bite-sized happiness, baked to perfection</p>
         </div>
 
         {/* Cookies Section */}
         <div className="mb-20">
           <div className="flex items-center justify-center gap-3 mb-8">
-            <Cookie className="w-8 h-8 text-soft-pink" />
-            <h3 className="font-playfair text-3xl font-bold text-chocolate">Cookies</h3>
-            <Cookie className="w-8 h-8 text-soft-pink" />
+            <Cookie className="w-8 h-8 text-rose-gold" />
+            <h3 className="font-playfair text-3xl font-bold text-dark-brown">Cookies</h3>
+            <Cookie className="w-8 h-8 text-rose-gold" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.cookies.map((cookie) => (
@@ -76,9 +74,9 @@ export default function CookiesBrownies() {
         {/* Brownies Section */}
         <div>
           <div className="flex items-center justify-center gap-3 mb-8">
-            <CakeSlice className="w-8 h-8 text-mint" />
-            <h3 className="font-playfair text-3xl font-bold text-chocolate">Brownies</h3>
-            <CakeSlice className="w-8 h-8 text-mint" />
+            <CakeSlice className="w-8 h-8 text-sage" />
+            <h3 className="font-playfair text-3xl font-bold text-dark-brown">Brownies</h3>
+            <CakeSlice className="w-8 h-8 text-sage" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.brownies.map((brownie) => (

@@ -16,16 +16,16 @@ export default function Cupcakes() {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Heading animation
+      // Heading animation - elegant fade in
       if (headingRef.current) {
         gsap.fromTo(headingRef.current,
-          { y: 80, opacity: 0, scale: 0.9 },
+          { y: 60, opacity: 0, scale: 0.95 },
           {
             y: 0,
             opacity: 1,
             scale: 1,
-            duration: 1,
-            ease: 'back.out(1.7)',
+            duration: 0.8,
+            ease: 'power2.out',
             scrollTrigger: {
               trigger: headingRef.current,
               start: 'top 85%',
@@ -34,17 +34,17 @@ export default function Cupcakes() {
         );
       }
 
-      // Cards stagger animation with bounce
+      // Cards stagger animation - smooth elegant entrance
       if (cardsRef.current) {
         gsap.fromTo(cardsRef.current.children,
-          { y: 100, opacity: 0, rotateY: -30 },
+          { y: 60, opacity: 0, scale: 0.95 },
           {
             y: 0,
             opacity: 1,
-            rotateY: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: 'back.out(1.4)',
+            scale: 1,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'power2.out',
             scrollTrigger: {
               trigger: cardsRef.current,
               start: 'top 80%',
@@ -59,22 +59,22 @@ export default function Cupcakes() {
 
   return (
     <section ref={sectionRef} id="cupcakes" className="py-24 px-6 bg-cream relative overflow-hidden">
-      {/* Background Decoration */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-soft-pink/10 to-transparent" />
+      {/* Background Decoration - Subtle */}
+      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-rose-gold/8 to-transparent" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1 bg-soft-pink/20 rounded-full text-sm font-semibold text-chocolate/70 mb-4">
+          <span className="inline-block px-4 py-1 bg-rose-gold/15 rounded-full text-sm font-semibold text-dark-brown/60 mb-4">
             Our Bestsellers
           </span>
           <h2
             ref={headingRef}
-            className="font-playfair text-5xl md:text-6xl font-bold text-chocolate mb-4"
+            className="font-playfair text-5xl md:text-6xl font-bold text-dark-brown mb-4"
           >
-            Magical <span className="text-gradient">Cupcakes</span>
+            Delightful <span className="text-gradient">Cupcakes</span>
           </h2>
-          <p className="text-chocolate/60 text-lg max-w-xl mx-auto">
-            Fluffy clouds of happiness topped with dreams. Flip the cards to discover the magic inside!
+          <p className="text-dark-brown/60 text-lg max-w-xl mx-auto text-pretty">
+            Fluffy clouds of happiness topped with the finest ingredients. Discover what makes each one special.
           </p>
         </div>
 

@@ -168,20 +168,20 @@ export default function Customizer() {
   };
 
   return (
-    <section ref={sectionRef} id="customizer" className="py-24 px-6 bg-gradient-to-b from-mint/20 to-cream relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-10 left-10 w-20 h-20 border-4 border-soft-pink/30 rounded-full" />
-        <div className="absolute top-40 right-20 w-32 h-32 border-4 border-mint/30 rounded-full" />
-        <div className="absolute bottom-20 left-1/4 w-24 h-24 border-4 border-gold/30 rounded-full" />
+    <section ref={sectionRef} id="customizer" className="py-24 px-6 bg-gradient-to-b from-sage/10 to-cream relative overflow-hidden">
+      {/* Background Pattern - Subtle */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-10 left-10 w-20 h-20 border-2 border-rose-gold/20 rounded-full" />
+        <div className="absolute top-40 right-20 w-32 h-32 border-2 border-sage/20 rounded-full" />
+        <div className="absolute bottom-20 left-1/4 w-24 h-24 border-2 border-terracotta/20 rounded-full" />
       </div>
 
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="text-center mb-12">
-          <h2 className="customizer-title font-playfair text-5xl md:text-6xl font-bold text-chocolate mb-4">
-            Design Your <span className="text-mint">Treat</span>
+          <h2 className="customizer-title font-playfair text-5xl md:text-6xl font-bold text-dark-brown mb-4">
+            Design Your <span className="text-rose-gold">Creation</span>
           </h2>
-          <p className="text-chocolate/60 text-lg">Step-by-step to your perfect creation</p>
+          <p className="text-dark-brown/60 text-lg">Step-by-step to your perfect treat</p>
         </div>
 
         {/* Progress Steps */}
@@ -193,10 +193,10 @@ export default function Customizer() {
               className={cn(
                 'px-4 py-2 rounded-full font-nunito text-sm font-bold transition-all duration-300 cursor-pointer',
                 index === currentStep
-                  ? 'bg-soft-pink text-chocolate scale-110 shadow-lg'
+                  ? 'bg-rose-gold text-cream scale-110 shadow-lg'
                   : index < currentStep
-                    ? 'bg-mint text-chocolate cursor-pointer hover:scale-105'
-                    : 'bg-cream text-chocolate/40'
+                    ? 'bg-sage text-cream cursor-pointer hover:scale-105'
+                    : 'bg-cream text-dark-brown/40'
               )}
             >
               <span className="hidden md:inline">{index + 1}. </span>
@@ -208,20 +208,20 @@ export default function Customizer() {
         {/* Content Area */}
         <div
           ref={contentRef}
-          className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border-2 border-soft-pink/20"
+          className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-premium-lg border border-warm-beige/50"
         >
           {currentStep === 4 || isComplete ? (
             <div className="text-center space-y-6">
-              <div className="w-24 h-24 bg-gradient-to-br from-soft-pink to-mint rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
+              <div className="w-24 h-24 bg-gradient-to-br from-rose-gold to-sage rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
                 <Sparkles className="w-12 h-12 text-white" />
               </div>
-              <h3 className="font-playfair text-3xl font-bold text-chocolate">Your Creation is Ready! 🎉</h3>
+              <h3 className="font-playfair text-3xl font-bold text-dark-brown">Your Creation is Ready!</h3>
 
-              <div className="bg-cream/50 rounded-2xl p-6 space-y-3 text-left max-w-md mx-auto">
+              <div className="bg-warm-beige/30 rounded-2xl p-6 space-y-3 text-left max-w-md mx-auto">
                 {selections.base && (
                   <div className="flex justify-between items-center">
-                    <span className="text-chocolate/60">Base</span>
-                    <span className="font-bold text-chocolate flex items-center gap-2">
+                    <span className="text-dark-brown/60">Base</span>
+                    <span className="font-bold text-dark-brown flex items-center gap-2">
                       {OPTIONS.base.find(b => b.name === selections.base)?.icon}
                       {selections.base}
                     </span>
@@ -229,8 +229,8 @@ export default function Customizer() {
                 )}
                 {selections.flavor && (
                   <div className="flex justify-between items-center">
-                    <span className="text-chocolate/60">Flavor</span>
-                    <span className="font-bold text-chocolate flex items-center gap-2">
+                    <span className="text-dark-brown/60">Flavor</span>
+                    <span className="font-bold text-dark-brown flex items-center gap-2">
                       {OPTIONS.flavor.find(f => f.name === selections.flavor)?.icon}
                       {selections.flavor}
                     </span>
@@ -238,8 +238,8 @@ export default function Customizer() {
                 )}
                 {selections.frosting && (
                   <div className="flex justify-between items-center">
-                    <span className="text-chocolate/60">Frosting</span>
-                    <span className="font-bold text-chocolate flex items-center gap-2">
+                    <span className="text-dark-brown/60">Frosting</span>
+                    <span className="font-bold text-dark-brown flex items-center gap-2">
                       {OPTIONS.frosting.find(f => f.name === selections.frosting)?.icon}
                       {selections.frosting}
                     </span>
@@ -247,18 +247,18 @@ export default function Customizer() {
                 )}
                 {(selections.toppings as string[]).length > 0 && (
                   <div className="flex justify-between items-center">
-                    <span className="text-chocolate/60">Toppings</span>
-                    <span className="font-bold text-chocolate">
+                    <span className="text-dark-brown/60">Toppings</span>
+                    <span className="font-bold text-dark-brown">
                       {(selections.toppings as string[]).map(t =>
                         OPTIONS.toppings.find(top => top.name === t)?.icon
                       ).join(' ')}
                     </span>
                   </div>
                 )}
-                <div className="border-t-2 border-chocolate/10 pt-3 mt-3">
+                <div className="border-t border-dark-brown/10 pt-3 mt-3">
                   <div className="flex justify-between items-center">
-                    <span className="font-playfair text-lg text-chocolate">Total</span>
-                    <span className="font-bold text-mint text-2xl">${(getPrice() / 100).toFixed(2)}</span>
+                    <span className="font-playfair text-lg text-dark-brown">Total</span>
+                    <span className="font-bold text-rose-gold text-2xl">${(getPrice() / 100).toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -270,7 +270,7 @@ export default function Customizer() {
                 </MagneticButton>
                 <button
                   onClick={() => { setIsComplete(false); setCurrentStep(0); setSelections({ base: '', flavor: '', frosting: '', toppings: [] }); }}
-                  className="px-6 py-4 border-2 border-chocolate/20 rounded-full font-bold text-chocolate hover:border-soft-pink hover:text-soft-pink transition-colors"
+                  className="px-6 py-4 border border-dark-brown/20 rounded-full font-bold text-dark-brown hover:border-rose-gold hover:text-rose-gold transition-colors"
                 >
                   Start Over
                 </button>
@@ -278,7 +278,7 @@ export default function Customizer() {
             </div>
           ) : (
             <div>
-              <h3 className="font-playfair text-2xl text-chocolate mb-6 text-center">
+              <h3 className="font-playfair text-2xl text-dark-brown mb-6 text-center">
                 Choose your {STEPS[currentStep]}
               </h3>
               <div className="grid grid-cols-2 gap-4">
@@ -287,20 +287,20 @@ export default function Customizer() {
                     key={option.name}
                     onClick={() => handleSelect(option.name)}
                     className={cn(
-                      'p-6 rounded-2xl border-2 transition-all duration-300 text-left hover:scale-105',
+                      'p-6 rounded-2xl border transition-all duration-300 text-left hover:scale-105',
                       isSelected(option.name)
-                        ? 'border-gold bg-gradient-to-br from-gold/20 to-soft-pink/20 shadow-lg scale-105'
-                        : 'border-chocolate/10 bg-cream/50 hover:border-soft-pink hover:shadow-md'
+                        ? 'border-rose-gold bg-gradient-to-br from-rose-gold/15 to-sage/15 shadow-lg scale-105'
+                        : 'border-dark-brown/10 bg-warm-beige/30 hover:border-rose-gold hover:shadow-md'
                     )}
                   >
                     <div className="text-4xl mb-2">{option.icon}</div>
-                    <div className="font-bold text-chocolate mb-1">{option.name}</div>
+                    <div className="font-bold text-dark-brown mb-1">{option.name}</div>
                     {option.price && (
-                      <div className="text-sm text-chocolate/60">+${(option.price / 100).toFixed(2)}</div>
+                      <div className="text-sm text-dark-brown/60">+${(option.price / 100).toFixed(2)}</div>
                     )}
                     {isSelected(option.name) && (
-                      <div className="absolute top-2 right-2 w-6 h-6 bg-gold rounded-full flex items-center justify-center">
-                        <Check className="w-4 h-4 text-chocolate" />
+                      <div className="absolute top-2 right-2 w-6 h-6 bg-rose-gold rounded-full flex items-center justify-center">
+                        <Check className="w-4 h-4 text-cream" />
                       </div>
                     )}
                   </button>
@@ -318,8 +318,8 @@ export default function Customizer() {
                 className={cn(
                   'flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all',
                   currentStep === 0
-                    ? 'text-chocolate/30 cursor-not-allowed'
-                    : 'text-chocolate hover:bg-soft-pink/20'
+                    ? 'text-dark-brown/30 cursor-not-allowed'
+                    : 'text-dark-brown hover:bg-rose-gold/10'
                 )}
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -331,8 +331,8 @@ export default function Customizer() {
                 className={cn(
                   'flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all',
                   currentStep === STEPS.length - 1
-                    ? 'text-chocolate/30 cursor-not-allowed'
-                    : 'text-chocolate hover:bg-soft-pink/20'
+                    ? 'text-dark-brown/30 cursor-not-allowed'
+                    : 'text-dark-brown hover:bg-rose-gold/10'
                 )}
               >
                 Next
@@ -344,9 +344,9 @@ export default function Customizer() {
 
         {/* Price Display */}
         <div className="text-center mt-8">
-          <div className="inline-flex items-center gap-4 bg-white/80 backdrop-blur-sm px-8 py-4 rounded-full shadow-lg border border-soft-pink/20">
-            <span className="font-playfair text-xl text-chocolate">Current Total:</span>
-            <span className="font-bold text-mint text-3xl">${(displayPrice / 100).toFixed(2)}</span>
+          <div className="inline-flex items-center gap-4 bg-white/80 backdrop-blur-sm px-8 py-4 rounded-full shadow-premium border border-warm-beige/50">
+            <span className="font-playfair text-xl text-dark-brown">Current Total:</span>
+            <span className="font-bold text-rose-gold text-3xl">${(displayPrice / 100).toFixed(2)}</span>
           </div>
         </div>
       </div>

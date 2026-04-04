@@ -26,22 +26,22 @@ export default function CustomCakes() {
         }
       );
 
-      // Staggered cards with alternating directions
+      // Staggered cards with smooth entrance
       const cards = gsap.utils.toArray<HTMLElement>('.cake-card');
       cards.forEach((card, i) => {
-        const direction = i % 2 === 0 ? -100 : 100;
         gsap.fromTo(card,
-          { x: direction, opacity: 0, rotation: i % 2 === 0 ? -5 : 5 },
+          { y: 60, opacity: 0, scale: 0.95 },
           {
-            x: 0,
+            y: 0,
             opacity: 1,
-            rotation: 0,
-            duration: 1,
-            ease: 'elastic.out(1, 0.5)',
+            scale: 1,
+            duration: 0.6,
+            ease: 'power2.out',
             scrollTrigger: {
               trigger: card,
               start: 'top 85%',
-            }
+            },
+            delay: i * 0.08
           }
         );
       });
@@ -51,21 +51,21 @@ export default function CustomCakes() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="custom-cakes" className="py-24 px-6 bg-soft-pink/10 relative overflow-hidden">
-      {/* Decorative Elements */}
-      <div className="absolute top-20 right-0 w-64 h-64 bg-mint/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-0 w-80 h-80 bg-gold/10 rounded-full blur-3xl" />
+    <section ref={sectionRef} id="custom-cakes" className="py-24 px-6 bg-warm-beige/20 relative overflow-hidden">
+      {/* Decorative Elements - Subtle */}
+      <div className="absolute top-20 right-0 w-64 h-64 bg-sage/12 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 left-0 w-80 h-80 bg-rose-gold/8 rounded-full blur-3xl" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div ref={headingRef} className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 rounded-full shadow-sm mb-4">
-            <Sparkles className="w-4 h-4 text-gold" />
-            <span className="text-sm font-semibold text-chocolate/70">Made to Order</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/60 backdrop-blur rounded-full shadow-premium mb-4">
+            <Sparkles className="w-4 h-4 text-rose-gold" />
+            <span className="text-sm font-semibold text-dark-brown/60">Made to Order</span>
           </div>
-          <h2 className="font-playfair text-5xl md:text-6xl font-bold text-chocolate mb-4">
+          <h2 className="font-playfair text-5xl md:text-6xl font-bold text-dark-brown mb-4">
             Custom <span className="text-gradient">Cakes</span>
           </h2>
-          <p className="text-chocolate/60 text-lg max-w-xl mx-auto">
+          <p className="text-dark-brown/60 text-lg max-w-xl mx-auto text-pretty">
             Your vision, our craftsmanship. Create memories with cakes as unique as your celebration.
           </p>
         </div>

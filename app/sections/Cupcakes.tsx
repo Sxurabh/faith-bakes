@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { gsap, ScrollTrigger } from '@/app/lib/gsap';
 import { products } from '@/app/data/products';
 import FlipCard from '@/app/components/FlipCard';
@@ -16,15 +16,14 @@ export default function Cupcakes() {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Heading animation
       if (headingRef.current) {
         gsap.fromTo(headingRef.current,
-          { y: 80, opacity: 0, scale: 0.9 },
+          { y: 60, opacity: 0, scale: 0.9 },
           {
             y: 0,
             opacity: 1,
             scale: 1,
-            duration: 1,
+            duration: 0.8,
             ease: 'back.out(1.7)',
             scrollTrigger: {
               trigger: headingRef.current,
@@ -34,16 +33,14 @@ export default function Cupcakes() {
         );
       }
 
-      // Cards stagger animation with bounce
       if (cardsRef.current) {
         gsap.fromTo(cardsRef.current.children,
-          { y: 100, opacity: 0, rotateY: -30 },
+          { y: 80, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            rotateY: 0,
-            duration: 0.8,
-            stagger: 0.15,
+            duration: 0.6,
+            stagger: 0.1,
             ease: 'back.out(1.4)',
             scrollTrigger: {
               trigger: cardsRef.current,
@@ -58,29 +55,28 @@ export default function Cupcakes() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="cupcakes" className="py-24 px-6 bg-cream relative overflow-hidden">
-      {/* Background Decoration */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-soft-pink/10 to-transparent" />
+    <section ref={sectionRef} id="cupcakes" className="py-16 sm:py-24 px-4 sm:px-6 bg-cream relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-24 sm:h-32 bg-gradient-to-b from-soft-pink/10 to-transparent" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1 bg-soft-pink/20 rounded-full text-sm font-semibold text-chocolate/70 mb-4">
+        <div className="text-center mb-10 sm:mb-16">
+          <span className="inline-block px-3 py-1 sm:px-4 sm:py-1 bg-soft-pink/20 rounded-full text-xs sm:text-sm font-semibold text-chocolate/70 mb-3 sm:mb-4">
             Our Bestsellers
           </span>
           <h2
             ref={headingRef}
-            className="font-playfair text-5xl md:text-6xl font-bold text-chocolate mb-4"
+            className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-chocolate mb-3 sm:mb-4"
           >
             Magical <span className="text-gradient">Cupcakes</span>
           </h2>
-          <p className="text-chocolate/60 text-lg max-w-xl mx-auto">
-            Fluffy clouds of happiness topped with dreams. Flip the cards to discover the magic inside!
+          <p className="text-chocolate/60 text-sm sm:text-base md:text-lg max-w-xl mx-auto px-2">
+            Fluffy clouds of happiness topped with dreams. Tap to discover the magic inside!
           </p>
         </div>
 
         <div
           ref={cardsRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8"
         >
           {products.cupcakes.map((cupcake) => (
             <FlipCard

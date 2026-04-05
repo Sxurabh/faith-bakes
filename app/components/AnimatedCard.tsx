@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { gsap } from '@/app/lib/gsap';
 
@@ -14,10 +14,20 @@ interface AnimatedCardProps {
 
 export default function AnimatedCard({ image, name, description, price, onQuickView }: AnimatedCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const [isTouch, setIsTouch] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
+  useEffect(() => {
+    const checkTouch = () => {
+      setIsTouch('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    };
+    checkTouch();
+    window.addEventListener('resize', checkTouch);
+    return () => window.removeEventListener('resize', checkTouch);
+  }, []);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
+    if (!cardRef.current || isTouch) return;
     
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -38,7 +48,7 @@ export default function AnimatedCard({ image, name, description, price, onQuickV
   };
 
   const handleMouseLeave = () => {
-    if (!cardRef.current) return;
+    if (!cardRef.current || isTouch) return;
     
     gsap.to(cardRef.current, {
       rotationX: 0,
@@ -49,36 +59,44 @@ export default function AnimatedCard({ image, name, description, price, onQuickV
     setIsHovered(false);
   };
 
+  const handleClick = () => {
+    if (isTouch && onQuickView) {
+      onQuickView();
+    }
+  };
+
   return (
     <div
       ref={cardRef}
       className="relative group cursor-pointer"
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={() => !isTouch && setIsHovered(true)}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       style={{ transformStyle: 'preserve-3d' }}
     >
-      <div className="relative overflow-hidden rounded-3xl bg-soft-cream shadow-lg transition-shadow duration-300 group-hover:shadow-xl">
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-soft-cream shadow-lg transition-shadow duration-300 group-hover:shadow-xl">
         <div className="relative aspect-square overflow-hidden">
           <Image
             src={image}
             alt={name}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-110"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-deep-chocolate/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
         
-        <div className="p-5">
-          <h3 className="font-playfair text-xl font-semibold text-deep-chocolate mb-2">
+        <div className="p-4 sm:p-5">
+          <h3 className="font-playfair text-lg sm:text-xl font-semibold text-deep-chocolate mb-1 sm:mb-2">
             {name}
           </h3>
-          <p className="text-deep-chocolate/70 text-sm mb-3 line-clamp-2">
+          <p className="text-xs sm:text-sm text-deep-chocolate/70 mb-2 sm:mb-3 line-clamp-2">
             {description}
           </p>
           
           <div className="flex items-center justify-between">
-            <span className="font-nunito font-bold text-raspberry text-lg">
+            <span className="font-nunito font-bold text-raspberry text-base sm:text-lg">
               ${(price / 100).toFixed(2)}
             </span>
             {onQuickView && (
@@ -87,7 +105,7 @@ export default function AnimatedCard({ image, name, description, price, onQuickV
                   e.stopPropagation();
                   onQuickView();
                 }}
-                className="px-4 py-2 bg-honey-gold text-deep-chocolate rounded-full text-sm font-semibold hover:bg-raspberry hover:text-white transition-colors"
+                className="px-3 py-1.5 sm:px-4 sm:py-2 bg-honey-gold text-deep-chocolate rounded-full text-xs sm:text-sm font-semibold hover:bg-raspberry hover:text-white transition-colors touch-manipulation"
               >
                 Quick View
               </button>

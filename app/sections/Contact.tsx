@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { gsap, ScrollTrigger } from '@/app/lib/gsap';
-import { Send, CheckCircle, Loader2, Sparkles, Heart, Star } from 'lucide-react';
+import { Send, CheckCircle, Loader2, Heart, Star } from 'lucide-react';
 import MagneticButton from '@/app/components/MagneticButton';
 
 export default function Contact() {
@@ -21,7 +21,7 @@ export default function Contact() {
         {
           y: 0,
           opacity: 1,
-          duration: 0.8,
+          duration: 0.6,
           ease: 'power2.out',
           scrollTrigger: { trigger: '.contact-title', start: 'top 85%' }
         }
@@ -32,8 +32,8 @@ export default function Contact() {
         {
           y: 0,
           opacity: 1,
-          duration: 0.5,
-          stagger: 0.1,
+          duration: 0.4,
+          stagger: 0.08,
           ease: 'power2.out',
           scrollTrigger: { trigger: formRef.current, start: 'top 80%' }
         }
@@ -44,18 +44,24 @@ export default function Contact() {
   }, []);
 
   const createConfetti = () => {
+    if (typeof window === 'undefined') return;
     const colors = ['#FFB6C1', '#98D8C8', '#FFD700', '#FFF8E7', '#5D4037'];
-    for (let i = 0; i < 50; i++) {
+    const isMobile = window.innerWidth < 640;
+    const count = isMobile ? 25 : 50;
+    
+    for (let i = 0; i < count; i++) {
       const confetti = document.createElement('div');
       confetti.className = 'confetti';
       confetti.style.left = Math.random() * 100 + 'vw';
       confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
       confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
-      confetti.style.animationDelay = Math.random() * 2 + 's';
+      confetti.style.animationDelay = Math.random() * 1 + 's';
       confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+      confetti.style.width = isMobile ? '8px' : '12px';
+      confetti.style.height = isMobile ? '8px' : '12px';
       document.body.appendChild(confetti);
 
-      setTimeout(() => confetti.remove(), 5000);
+      setTimeout(() => confetti.remove(), 4000);
     }
   };
 
@@ -71,35 +77,34 @@ export default function Contact() {
     setTimeout(() => {
       setFormState({ name: '', email: '', message: '' });
       setStatus('idle');
-    }, 5000);
+    }, 4000);
   };
 
   return (
-    <section ref={sectionRef} id="contact" className="py-24 px-6 bg-chocolate text-cream relative overflow-hidden">
-      {/* Decorative Background */}
+    <section ref={sectionRef} id="contact" className="py-16 sm:py-24 px-4 sm:px-6 bg-chocolate text-cream relative overflow-hidden">
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-10 text-6xl rotate-12">🧁</div>
-        <div className="absolute top-40 right-20 text-6xl -rotate-12">🍰</div>
-        <div className="absolute bottom-20 left-1/4 text-6xl rotate-45">🍪</div>
-        <div className="absolute bottom-40 right-10 text-6xl -rotate-45">🎂</div>
+        <div className="absolute top-6 left-6 sm:top-10 sm:left-10 text-4xl sm:text-6xl rotate-12">🧁</div>
+        <div className="absolute top-32 right-10 sm:top-40 sm:right-20 text-4xl sm:text-6xl -rotate-12">🍰</div>
+        <div className="absolute bottom-16 left-1/4 text-4xl sm:bottom-20 sm:text-6xl rotate-45">🍪</div>
+        <div className="absolute bottom-32 right-6 sm:bottom-40 sm:right-10 text-4xl sm:text-6xl -rotate-45">🎂</div>
       </div>
 
       <div className="max-w-2xl mx-auto relative z-10">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-cream/10 rounded-full mb-4">
-            <Heart className="w-4 h-4 text-soft-pink" />
-            <span className="text-sm font-semibold text-cream/70">We&apos;d love to hear from you</span>
+        <div className="text-center mb-8 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-cream/10 rounded-full mb-3 sm:mb-4">
+            <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-soft-pink" />
+            <span className="text-xs sm:text-sm font-semibold text-cream/70">We&apos;d love to hear from you</span>
           </div>
-          <h2 className="contact-title font-playfair text-5xl md:text-6xl font-bold mb-4">
+          <h2 className="contact-title font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4">
             Get In Touch
           </h2>
-          <p className="text-cream/60 text-lg">Ready to order? Have questions? Let&apos;s chat!</p>
+          <p className="text-cream/60 text-base sm:text-lg">Ready to order? Have questions? Let&apos;s chat!</p>
         </div>
 
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="space-y-6"
+          className="space-y-5 sm:space-y-6"
         >
           <div className="form-field relative group">
             <input
@@ -109,7 +114,7 @@ export default function Contact() {
               onChange={(e) => setFormState({ ...formState, name: e.target.value })}
               onFocus={() => setFocusedField('name')}
               onBlur={() => setFocusedField(null)}
-              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-all duration-300"
+              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-all duration-300 text-base"
               placeholder="Your Name"
               required
             />
@@ -120,8 +125,8 @@ export default function Contact() {
                 : 'top-4 text-cream/70'
                 }`}
             >
-              <span className="flex items-center gap-2">
-                <Star className="w-3 h-3" />
+              <span className="flex items-center gap-2 text-sm sm:text-base">
+                <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 Your Name
               </span>
             </label>
@@ -136,7 +141,7 @@ export default function Contact() {
               onChange={(e) => setFormState({ ...formState, email: e.target.value })}
               onFocus={() => setFocusedField('email')}
               onBlur={() => setFocusedField(null)}
-              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-all duration-300"
+              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-all duration-300 text-base"
               placeholder="Your Email"
               required
             />
@@ -147,8 +152,8 @@ export default function Contact() {
                 : 'top-4 text-cream/70'
                 }`}
             >
-              <span className="flex items-center gap-2">
-                <Star className="w-3 h-3" />
+              <span className="flex items-center gap-2 text-sm sm:text-base">
+                <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 Your Email
               </span>
             </label>
@@ -162,7 +167,7 @@ export default function Contact() {
               onChange={(e) => setFormState({ ...formState, message: e.target.value })}
               onFocus={() => setFocusedField('message')}
               onBlur={() => setFocusedField(null)}
-              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-all duration-300 min-h-32 resize-none"
+              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-all duration-300 min-h-24 sm:min-h-32 resize-none text-base"
               placeholder="Your Message"
               required
             />
@@ -173,19 +178,19 @@ export default function Contact() {
                 : 'top-4 text-cream/70'
                 }`}
             >
-              <span className="flex items-center gap-2">
-                <Star className="w-3 h-3" />
+              <span className="flex items-center gap-2 text-sm sm:text-base">
+                <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 Your Message
               </span>
             </label>
             <div className="absolute bottom-0 left-0 h-0.5 bg-gold transition-all duration-300 w-0 peer-focus:w-full" />
           </div>
 
-          <div className="form-field">
+          <div className="form-field pt-2">
             {status === 'success' ? (
-              <div className="w-full py-4 bg-mint text-chocolate rounded-xl font-bold text-lg flex items-center justify-center gap-2 animate-bounce">
-                <CheckCircle className="w-6 h-6" />
-                <span>Message Sent! We&apos;ll be in touch soon 🎉</span>
+              <div className="w-full py-3 sm:py-4 bg-mint text-chocolate rounded-xl font-bold flex items-center justify-center gap-2">
+                <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6" />
+                <span className="text-sm sm:text-base">Message Sent! We&apos;ll be in touch soon</span>
               </div>
             ) : (
               <MagneticButton
@@ -194,13 +199,13 @@ export default function Contact() {
               >
                 {status === 'loading' ? (
                   <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    Sending...
+                    <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
+                    <span className="text-sm sm:text-base">Sending...</span>
                   </>
                 ) : (
                   <>
-                    <Send className="w-5 h-5" />
-                    Send Message
+                    <Send className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span className="text-sm sm:text-base">Send Message</span>
                   </>
                 )}
               </MagneticButton>
@@ -208,49 +213,32 @@ export default function Contact() {
           </div>
         </form>
 
-        {/* Success Celebration */}
         {status === 'success' && (
-          <div className="fixed inset-0 pointer-events-none flex items-center justify-center z-50">
-            <div className="text-center animate-bounce">
-              <div className="text-8xl mb-4">🎉</div>
-              <div className="text-2xl font-bold text-chocolate bg-white/90 px-6 py-3 rounded-full shadow-2xl">
-                Thank you! ✨
+          <div className="fixed inset-0 pointer-events-none flex items-center justify-center z-50 p-4">
+            <div className="text-center">
+              <div className="text-6xl sm:text-8xl mb-4">🎉</div>
+              <div className="text-xl sm:text-2xl font-bold text-chocolate bg-white/90 px-5 py-3 sm:px-6 sm:py-3 rounded-full shadow-2xl">
+                Thank you!
               </div>
             </div>
           </div>
         )}
 
-        {/* Additional Contact Info */}
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-          <div className="p-4 bg-cream/10 rounded-2xl hover:bg-cream/20 transition-colors">
-            <div className="text-3xl mb-2">📧</div>
-            <div className="font-bold text-sm">hello@faithbakes.com</div>
+        <div className="mt-10 sm:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 text-center">
+          <div className="p-3 sm:p-4 bg-cream/10 rounded-xl sm:rounded-2xl hover:bg-cream/20 transition-colors">
+            <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">📧</div>
+            <div className="font-bold text-xs sm:text-sm break-all">hello@faithbakes.com</div>
           </div>
-          <div className="p-4 bg-cream/10 rounded-2xl hover:bg-cream/20 transition-colors">
-            <div className="text-3xl mb-2">📱</div>
-            <div className="font-bold text-sm">+1 (555) 123-4567</div>
+          <div className="p-3 sm:p-4 bg-cream/10 rounded-xl sm:rounded-2xl hover:bg-cream/20 transition-colors">
+            <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">📱</div>
+            <div className="font-bold text-xs sm:text-sm">+1 (555) 123-4567</div>
           </div>
-          <div className="p-4 bg-cream/10 rounded-2xl hover:bg-cream/20 transition-colors">
-            <div className="text-3xl mb-2">📍</div>
-            <div className="font-bold text-sm">Baker&apos;s Street, NY</div>
+          <div className="p-3 sm:p-4 bg-cream/10 rounded-xl sm:rounded-2xl hover:bg-cream/20 transition-colors">
+            <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">📍</div>
+            <div className="font-bold text-xs sm:text-sm">Baker&apos;s Street, NY</div>
           </div>
         </div>
       </div>
-
-      {/* Confetti Animation Styles */}
-      <style jsx>{`
-        @keyframes confetti-fall {
-          0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-          100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-        }
-        .confetti {
-          position: fixed;
-          width: 12px;
-          height: 12px;
-          animation: confetti-fall 3s ease-out forwards;
-          z-index: 9999;
-        }
-      `}</style>
     </section>
   );
 }

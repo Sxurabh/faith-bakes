@@ -22,7 +22,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: 'cover',
-  themeColor: '#FFB6C1',
+  themeColor: '#92400E',
 };
 
 export const metadata: Metadata = {
@@ -52,7 +52,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Faith Bakes" />
       </head>
-      <body className="paper-grain min-h-screen bg-cream text-chocolate antialiased overflow-x-hidden">
+      <body className="paper-grain min-h-screen bg-cream text-chocolate antialiased overflow-x-hidden" style={{ backgroundColor: '#FFFBEB', color: '#78350F' }}>
         <div className="custom-cursor hidden md:block" id="cursor" />
         <div id="particles-container" className="fixed inset-0 pointer-events-none z-0 overflow-hidden" />
         <ServiceWorkerRegistration />

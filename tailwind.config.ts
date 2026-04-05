@@ -8,15 +8,27 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'soft-pink': '#FFB6C1',
-        cream: '#FFF8E7',
-        mint: '#98D8C8',
-        chocolate: '#5D4037',
-        gold: '#FFD700',
+        amber: {
+          50: '#FFFBEB',
+          100: '#FEF3C7',
+          200: '#FDE68A',
+          300: '#FCD34D',
+          400: '#FBBF24',
+          500: '#F59E0B',
+          600: '#D97706',
+          700: '#B45309',
+          800: '#92400E',
+          900: '#78350F',
+        },
+        cream: '#FEF3C7',
+        warmIvory: '#FFFBEB',
+        chocolate: '#78350F',
+        gold: '#F59E0B',
+        rose: '#F43F5E',
       },
       fontFamily: {
         playfair: ['var(--font-playfair)', 'Playfair Display', 'serif'],
-        nunito: ['var(--font-nunito)', 'Nunito', 'sans-serif'],
+        inter: ['var(--font-inter)', 'Inter', 'sans-serif'],
       },
       animation: {
         float: 'float 6s ease-in-out infinite',
@@ -27,6 +39,7 @@ const config: Config = {
         wobble: 'wobble 0.5s ease-in-out',
         shimmer: 'shimmer 2s infinite',
         morph: 'morph 8s ease-in-out infinite',
+        squish: 'squish 0.3s ease-out',
       },
       keyframes: {
         float: {
@@ -51,6 +64,11 @@ const config: Config = {
         morph: {
           '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
           '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
+        },
+        squish: {
+          '0%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(0.95)' },
+          '100%': { transform: 'scale(1)' },
         },
       },
     },

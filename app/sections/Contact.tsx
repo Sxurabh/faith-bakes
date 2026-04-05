@@ -92,7 +92,7 @@ export default function Contact() {
       <div className="max-w-2xl mx-auto relative z-10">
         <div className="text-center mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-cream/10 rounded-full mb-3 sm:mb-4">
-            <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-soft-pink" />
+            <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-rose" />
             <span className="text-xs sm:text-sm font-semibold text-cream/70">We&apos;d love to hear from you</span>
           </div>
           <h2 className="contact-title font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4">
@@ -114,14 +114,14 @@ export default function Contact() {
               onChange={(e) => setFormState({ ...formState, name: e.target.value })}
               onFocus={() => setFocusedField('name')}
               onBlur={() => setFocusedField(null)}
-              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-all duration-300 text-base"
+              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-amber focus:outline-none peer placeholder-transparent transition-all duration-300 text-base"
               placeholder="Your Name"
               required
             />
             <label
               htmlFor="name"
               className={`absolute left-4 transition-all duration-300 pointer-events-none ${focusedField === 'name' || formState.name
-                ? 'top-2 text-xs text-gold font-bold'
+                ? 'top-2 text-xs text-amber font-bold'
                 : 'top-4 text-cream/70'
                 }`}
             >
@@ -130,7 +130,7 @@ export default function Contact() {
                 Your Name
               </span>
             </label>
-            <div className="absolute bottom-0 left-0 h-0.5 bg-gold transition-all duration-300 w-0 peer-focus:w-full" />
+            <div className="absolute bottom-0 left-0 h-0.5 bg-amber transition-all duration-300 w-0 peer-focus:w-full" />
           </div>
 
           <div className="form-field relative group">
@@ -141,14 +141,14 @@ export default function Contact() {
               onChange={(e) => setFormState({ ...formState, email: e.target.value })}
               onFocus={() => setFocusedField('email')}
               onBlur={() => setFocusedField(null)}
-              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-all duration-300 text-base"
+              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-amber focus:outline-none peer placeholder-transparent transition-all duration-300 text-base"
               placeholder="Your Email"
               required
             />
             <label
               htmlFor="email"
               className={`absolute left-4 transition-all duration-300 pointer-events-none ${focusedField === 'email' || formState.email
-                ? 'top-2 text-xs text-gold font-bold'
+                ? 'top-2 text-xs text-amber font-bold'
                 : 'top-4 text-cream/70'
                 }`}
             >
@@ -157,7 +157,7 @@ export default function Contact() {
                 Your Email
               </span>
             </label>
-            <div className="absolute bottom-0 left-0 h-0.5 bg-gold transition-all duration-300 w-0 peer-focus:w-full" />
+            <div className="absolute bottom-0 left-0 h-0.5 bg-amber transition-all duration-300 w-0 peer-focus:w-full" />
           </div>
 
           <div className="form-field relative group">
@@ -167,14 +167,14 @@ export default function Contact() {
               onChange={(e) => setFormState({ ...formState, message: e.target.value })}
               onFocus={() => setFocusedField('message')}
               onBlur={() => setFocusedField(null)}
-              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-gold focus:outline-none peer placeholder-transparent transition-all duration-300 min-h-24 sm:min-h-32 resize-none text-base"
+              className="w-full px-4 pt-6 pb-2 bg-cream/10 border-2 border-cream/30 rounded-xl focus:border-amber focus:outline-none peer placeholder-transparent transition-all duration-300 min-h-24 sm:min-h-32 resize-none text-base"
               placeholder="Your Message"
               required
             />
             <label
               htmlFor="message"
               className={`absolute left-4 transition-all duration-300 pointer-events-none ${focusedField === 'message' || formState.message
-                ? 'top-2 text-xs text-gold font-bold'
+                ? 'top-2 text-xs text-amber font-bold'
                 : 'top-4 text-cream/70'
                 }`}
             >
@@ -183,18 +183,18 @@ export default function Contact() {
                 Your Message
               </span>
             </label>
-            <div className="absolute bottom-0 left-0 h-0.5 bg-gold transition-all duration-300 w-0 peer-focus:w-full" />
+            <div className="absolute bottom-0 left-0 h-0.5 bg-amber transition-all duration-300 w-0 peer-focus:w-full" />
           </div>
 
           <div className="form-field pt-2">
             {status === 'success' ? (
-              <div className="w-full py-3 sm:py-4 bg-mint text-chocolate rounded-xl font-bold flex items-center justify-center gap-2">
+              <div className="w-full py-3 sm:py-4 bg-amber-500 text-chocolate rounded-xl font-bold flex items-center justify-center gap-2">
                 <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6" />
                 <span className="text-sm sm:text-base">Message Sent! We&apos;ll be in touch soon</span>
               </div>
             ) : (
               <MagneticButton
-                variant="gold"
+                variant="primary"
                 className="w-full"
               >
                 {status === 'loading' ? (

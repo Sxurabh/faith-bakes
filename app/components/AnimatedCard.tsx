@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { gsap } from '@/app/lib/gsap';
+import { cn } from '@/app/lib/utils';
 
 interface AnimatedCardProps {
   image: string;
@@ -68,14 +69,14 @@ export default function AnimatedCard({ image, name, description, price, onQuickV
   return (
     <div
       ref={cardRef}
-      className="relative group cursor-pointer"
+      className="relative group cursor-pointer perspective-1000"
       onMouseEnter={() => !isTouch && setIsHovered(true)}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       style={{ transformStyle: 'preserve-3d' }}
     >
-      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-soft-cream shadow-lg transition-shadow duration-300 group-hover:shadow-xl">
+      <div className="relative overflow-hidden rounded-3xl bg-white/60 backdrop-blur-md border border-white/30 shadow-xl transition-all duration-300 group-hover:shadow-2xl group-hover:scale-[1.02]">
         <div className="relative aspect-square overflow-hidden">
           <Image
             src={image}
@@ -84,19 +85,19 @@ export default function AnimatedCard({ image, name, description, price, onQuickV
             className="object-cover transition-transform duration-500 group-hover:scale-110"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-deep-chocolate/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-amber-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
         
-        <div className="p-4 sm:p-5">
-          <h3 className="font-playfair text-lg sm:text-xl font-semibold text-deep-chocolate mb-1 sm:mb-2">
+        <div className="p-5">
+          <h3 className="font-playfair text-xl font-semibold text-chocolate mb-2">
             {name}
           </h3>
-          <p className="text-xs sm:text-sm text-deep-chocolate/70 mb-2 sm:mb-3 line-clamp-2">
+          <p className="text-chocolate/70 text-sm mb-3 line-clamp-2">
             {description}
           </p>
           
           <div className="flex items-center justify-between">
-            <span className="font-nunito font-bold text-raspberry text-base sm:text-lg">
+            <span className="font-inter font-bold text-amber-700 text-lg">
               ${(price / 100).toFixed(2)}
             </span>
             {onQuickView && (
@@ -105,7 +106,7 @@ export default function AnimatedCard({ image, name, description, price, onQuickV
                   e.stopPropagation();
                   onQuickView();
                 }}
-                className="px-3 py-1.5 sm:px-4 sm:py-2 bg-honey-gold text-deep-chocolate rounded-full text-xs sm:text-sm font-semibold hover:bg-raspberry hover:text-white transition-colors touch-manipulation"
+                className="px-4 py-2 bg-amber-100 text-chocolate rounded-full text-sm font-semibold hover:bg-amber-200 transition-colors cursor-pointer touch-manipulation"
               >
                 Quick View
               </button>

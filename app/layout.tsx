@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Playfair_Display, Nunito } from 'next/font/google';
+import { Playfair_Display, Inter } from 'next/font/google';
 import ServiceWorkerRegistration from './components/ServiceWorkerRegistration';
 import './globals.css';
 
@@ -10,10 +10,10 @@ const playfair = Playfair_Display({
   display: 'swap',
 });
 
-const nunito = Nunito({
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '600', '700', '800'],
-  variable: '--font-nunito',
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-inter',
   display: 'swap',
 });
 
@@ -22,7 +22,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: 'cover',
-  themeColor: '#FFB6C1',
+  themeColor: '#92400E',
 };
 
 export const metadata: Metadata = {
@@ -45,14 +45,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${nunito.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <head>
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Faith Bakes" />
       </head>
-      <body className="paper-grain min-h-screen bg-cream text-chocolate antialiased overflow-x-hidden">
+      <body className="paper-grain min-h-screen bg-cream text-chocolate antialiased overflow-x-hidden" style={{ backgroundColor: '#FFFBEB', color: '#78350F' }}>
         <div className="custom-cursor hidden md:block" id="cursor" />
         <div id="particles-container" className="fixed inset-0 pointer-events-none z-0 overflow-hidden" />
         <ServiceWorkerRegistration />

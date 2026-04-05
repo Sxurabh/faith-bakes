@@ -15,8 +15,8 @@ const config: Config = {
         gold: '#FFD700',
       },
       fontFamily: {
-        playfair: ['Playfair Display', 'serif'],
-        nunito: ['Nunito', 'sans-serif'],
+        playfair: ['var(--font-playfair)', 'Playfair Display', 'serif'],
+        nunito: ['var(--font-nunito)', 'Nunito', 'sans-serif'],
       },
       animation: {
         float: 'float 6s ease-in-out infinite',

@@ -172,17 +172,17 @@ export default function Customizer() {
   };
 
   return (
-    <section ref={sectionRef} id="customizer" className="py-16 sm:py-24 px-4 sm:px-6 bg-gradient-to-b from-mint/20 to-cream relative overflow-hidden">
+    <section ref={sectionRef} id="customizer" className="py-16 sm:py-24 px-4 sm:px-6 bg-gradient-to-b from-amber/20 to-cream relative overflow-hidden">
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-10 left-10 w-16 h-16 sm:w-20 sm:h-20 border-4 border-soft-pink/30 rounded-full" />
-        <div className="absolute top-40 right-10 sm:right-20 w-24 h-24 sm:w-32 sm:h-32 border-4 border-mint/30 rounded-full" />
-        <div className="absolute bottom-20 left-1/4 w-20 h-20 sm:w-24 sm:h-24 border-4 border-gold/30 rounded-full" />
+        <div className="absolute top-10 left-10 w-16 h-16 sm:w-20 sm:h-20 border-4 border-rose/30 rounded-full" />
+        <div className="absolute top-40 right-10 sm:right-20 w-24 h-24 sm:w-32 sm:h-32 border-4 border-amber/30 rounded-full" />
+        <div className="absolute bottom-20 left-1/4 w-20 h-20 sm:w-24 sm:h-24 border-4 bg-amber-500 text-white/30 rounded-full" />
       </div>
 
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="customizer-title font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-chocolate mb-3 sm:mb-4">
-            Design Your <span className="text-mint">Treat</span>
+            Design Your <span className="text-amber">Treat</span>
           </h2>
           <p className="text-chocolate/60 text-base sm:text-lg px-4">Step-by-step to your perfect creation</p>
         </div>
@@ -195,9 +195,9 @@ export default function Customizer() {
               className={cn(
                 'px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-full font-nunito text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer touch-manipulation',
                 index === currentStep
-                  ? 'bg-soft-pink text-chocolate scale-105 shadow-lg'
+                  ? 'bg-rose text-chocolate scale-105 shadow-lg'
                   : index < currentStep
-                    ? 'bg-mint text-chocolate cursor-pointer hover:scale-105'
+                    ? 'bg-amber text-chocolate cursor-pointer hover:scale-105'
                     : 'bg-cream text-chocolate/40'
               )}
             >
@@ -209,11 +209,11 @@ export default function Customizer() {
 
         <div
           ref={contentRef}
-          className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl border-2 border-soft-pink/20"
+          className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl border-2 border-rose/20"
         >
           {currentStep === 4 || isComplete ? (
             <div className="text-center space-y-4 sm:space-y-6">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-soft-pink to-mint rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-rose to-amber rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl">
                 <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white" />
               </div>
               <h3 className="font-playfair text-xl sm:text-2xl md:text-3xl font-bold text-chocolate">Your Creation is Ready!</h3>
@@ -259,7 +259,7 @@ export default function Customizer() {
                 <div className="border-t-2 border-chocolate/10 pt-2 sm:pt-3 mt-2 sm:mt-3">
                   <div className="flex justify-between items-center">
                     <span className="font-playfair text-base sm:text-lg text-chocolate">Total</span>
-                    <span className="font-bold text-mint text-xl sm:text-2xl">${(getPrice() / 100).toFixed(2)}</span>
+                    <span className="font-bold text-amber text-xl sm:text-2xl">${(getPrice() / 100).toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -271,7 +271,7 @@ export default function Customizer() {
                 </MagneticButton>
                 <button
                   onClick={() => { setIsComplete(false); setCurrentStep(0); setSelections({ base: '', flavor: '', frosting: '', toppings: [] }); }}
-                  className="px-4 py-3 sm:px-6 sm:py-4 border-2 border-chocolate/20 rounded-full font-bold text-chocolate hover:border-soft-pink hover:text-soft-pink transition-colors touch-manipulation text-sm sm:text-base"
+                  className="px-4 py-3 sm:px-6 sm:py-4 border-2 border-chocolate/20 rounded-full font-bold text-chocolate hover:border-rose hover:text-rose transition-colors touch-manipulation text-sm sm:text-base"
                 >
                   Start Over
                 </button>
@@ -290,8 +290,8 @@ export default function Customizer() {
                     className={cn(
                       'relative p-4 sm:p-6 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 text-left hover:scale-[1.02] active:scale-[0.98] touch-manipulation',
                       isSelected(option.name)
-                        ? 'border-gold bg-gradient-to-br from-gold/20 to-soft-pink/20 shadow-lg scale-[1.02]'
-                        : 'border-chocolate/10 bg-cream/50 hover:border-soft-pink hover:shadow-md'
+                        ? 'bg-amber-500 text-white bg-gradient-to-br from-gold/20 to-rose/20 shadow-lg scale-[1.02]'
+                        : 'border-chocolate/10 bg-cream/50 hover:border-rose hover:shadow-md'
                     )}
                   >
                     <div className="text-3xl sm:text-4xl mb-2">{option.icon}</div>
@@ -319,7 +319,7 @@ export default function Customizer() {
                   'flex items-center gap-1.5 sm:gap-2 px-4 py-2.5 sm:px-6 sm:py-3 rounded-full font-semibold transition-all touch-manipulation text-sm sm:text-base',
                   currentStep === 0
                     ? 'text-chocolate/30 cursor-not-allowed'
-                    : 'text-chocolate hover:bg-soft-pink/20'
+                    : 'text-chocolate hover:bg-rose/20'
                 )}
               >
                 <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -332,7 +332,7 @@ export default function Customizer() {
                   'flex items-center gap-1.5 sm:gap-2 px-4 py-2.5 sm:px-6 sm:py-3 rounded-full font-semibold transition-all touch-manipulation text-sm sm:text-base',
                   currentStep === STEPS.length - 1
                     ? 'text-chocolate/30 cursor-not-allowed'
-                    : 'text-chocolate hover:bg-soft-pink/20'
+                    : 'text-chocolate hover:bg-rose/20'
                 )}
               >
                 Next
@@ -343,9 +343,9 @@ export default function Customizer() {
         </div>
 
         <div className="text-center mt-6 sm:mt-8">
-          <div className="inline-flex items-center gap-2 sm:gap-4 bg-white/80 backdrop-blur-sm px-4 py-2.5 sm:px-8 sm:py-4 rounded-full shadow-lg border border-soft-pink/20">
+          <div className="inline-flex items-center gap-2 sm:gap-4 bg-white/80 backdrop-blur-sm px-4 py-2.5 sm:px-8 sm:py-4 rounded-full shadow-lg border border-rose/20">
             <span className="font-playfair text-base sm:text-xl text-chocolate">Current Total:</span>
-            <span className="font-bold text-mint text-xl sm:text-3xl">${(displayPrice / 100).toFixed(2)}</span>
+            <span className="font-bold text-amber text-xl sm:text-3xl">${(displayPrice / 100).toFixed(2)}</span>
           </div>
         </div>
       </div>

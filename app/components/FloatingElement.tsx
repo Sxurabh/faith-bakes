@@ -1,47 +1,54 @@
+import { useRef, useEffect } from 'react';
+import { gsap } from '@/app/lib/gsap';
 import { cn } from '@/app/lib/utils';
 
 interface FloatingElementProps {
   children: React.ReactNode;
   className?: string;
   delay?: 'none' | 'small' | 'medium' | 'large';
-  size?: 'sm' | 'md' | 'lg';
-  parallaxSpeed?: number;
-  parallaxOffset?: number;
+  speed?: 'slow' | 'medium' | 'fast';
 }
 
-const delayClasses = {
-  none: '',
-  small: 'animate-float',
-  medium: 'animate-float-delayed',
-  large: 'animate-float-slow',
+const delayMap = {
+  none: 0,
+  small: 0.2,
+  medium: 0.5,
+  large: 1,
 };
 
-const sizeClasses = {
-  sm: 'w-12 h-12',
-  md: 'w-20 h-20',
-  lg: 'w-32 h-32',
-};
-
-export default function FloatingElement({
-  children,
+export default function FloatingElement({ 
+  children, 
   className = '',
-  delay = 'small',
-  size = 'md',
-  parallaxOffset = 0,
+  delay = 'none',
+  speed = 'medium'
 }: FloatingElementProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  
+  const speedMap = {
+    slow: { y: 30, x: 20, rotation: 15, duration: 6 },
+    medium: { y: 20, x: 15, rotation: 10, duration: 4 },
+    fast: { y: 15, x: 10, rotation: 8, duration: 3 },
+  };
+
+  useEffect(() => {
+    if (!ref.current) return;
+    
+    const { y, x, rotation, duration } = speedMap[speed];
+    
+    gsap.to(ref.current, {
+      y: `random(-${y}, ${y})`,
+      x: `random(-${x}, ${x})`,
+      rotation: `random(-${rotation}, ${rotation})`,
+      duration: duration,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut',
+      delay: delayMap[delay],
+    });
+  }, [speed, delay]);
+
   return (
-    <div
-      className={cn(
-        'flex items-center justify-center',
-        delayClasses[delay],
-        sizeClasses[size],
-        className
-      )}
-      style={{ 
-        animationDelay: delay === 'medium' ? '2s' : delay === 'large' ? '1s' : '0s',
-        transform: `translateY(${parallaxOffset}px)`,
-      }}
-    >
+    <div ref={ref} className={cn('pointer-events-none', className)}>
       {children}
     </div>
   );
